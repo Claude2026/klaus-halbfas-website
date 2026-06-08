@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Klaus Halbfas – Das Rätsel | Die letzte Frage an die Menschheit</title>
+<meta name="description" content="Das Rätsel – Die letzte Frage an die Menschheit. Der KI-Thriller von Klaus Halbfas. Eine Superintelligenz stellt der Menschheit eine Frage. 360 Stunden für die Antwort.">
+<meta property="og:title" content="Das Rätsel – Die letzte Frage an die Menschheit">
+<meta property="og:description" content="Eine Superintelligenz stellt der Menschheit eine Frage. Frist: 360 Stunden. Der KI-Thriller von Klaus Halbfas.">
+<meta property="og:image" content="https://klaus-halbfas.com/cover-das-raetsel.jpg">
+<meta property="og:type" content="book">
+<style>
+  :root{
+    --bg:#faf8f4; --bg-soft:#f1ece4; --text:#2b3240; --muted:#5d6678;
+    --teal:#0e7d8a; --coral:#d6457e; --card:#ffffff; --line:#e6dfd4;
+    --dark:#10141f;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:Georgia,'Times New Roman',serif;line-height:1.75}
+  .sans{font-family:'Segoe UI',Arial,Helvetica,sans-serif}
+  a{color:var(--teal);text-decoration:none}
+  a:hover{text-decoration:underline}
+  header{position:sticky;top:0;background:rgba(250,248,244,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:10}
+  nav{max-width:1060px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:16px 24px}
+  .logo{font-family:'Segoe UI',Arial,sans-serif;font-weight:700;letter-spacing:.12em;font-size:.95rem;color:var(--text)}
+  .logo span{color:var(--teal)}
+  nav ul{display:flex;gap:26px;list-style:none}
+  nav ul a{font-family:'Segoe UI',Arial,sans-serif;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  nav ul a:hover{color:var(--teal);text-decoration:none}
+
+  .hero{background:linear-gradient(180deg,#fdfcfa 0%, var(--bg-soft) 100%);border-bottom:1px solid var(--line)}
+  .hero-inner{max-width:1060px;margin:0 auto;padding:80px 24px 70px;display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
+  .kicker{font-family:'Segoe UI',Arial,sans-serif;color:var(--coral);letter-spacing:.26em;font-size:.8rem;text-transform:uppercase;margin-bottom:18px;font-weight:600}
+  h1{font-size:3.4rem;letter-spacing:.03em;line-height:1.1;margin-bottom:12px;color:#1d2330}
+  .subtitle{font-family:'Segoe UI',Arial,sans-serif;color:var(--teal);letter-spacing:.16em;font-size:1.0rem;text-transform:uppercase;margin-bottom:26px;font-weight:600}
+  .hook{color:var(--muted);font-size:1.14rem;max-width:34em;margin-bottom:34px}
+  .hook strong{color:var(--text)}
+  .btn{display:inline-block;font-family:'Segoe UI',Arial,sans-serif;font-weight:600;letter-spacing:.04em;padding:14px 30px;border-radius:999px;margin-right:14px;margin-bottom:10px;transition:all .2s}
+  .btn-primary{background:var(--teal);color:#fff;box-shadow:0 6px 18px rgba(14,125,138,.25)}
+  .btn-primary:hover{background:#0a6a76;text-decoration:none;transform:translateY(-1px)}
+  .btn-ghost{border:1.5px solid #cfc6b8;color:var(--text)}
+  .btn-ghost:hover{border-color:var(--teal);color:var(--teal);text-decoration:none}
+  .cover-wrap{text-align:center}
+  .cover-wrap img{width:100%;max-width:360px;border-radius:8px;box-shadow:0 18px 50px rgba(29,35,48,.28);transform:rotate(1.5deg)}
+  .note{font-size:.82rem;color:#8a8FA0;margin-top:12px;font-family:'Segoe UI',Arial,sans-serif}
+
+  section{max-width:880px;margin:0 auto;padding:76px 24px}
+  h2{font-size:1.8rem;letter-spacing:.02em;margin-bottom:34px;text-align:center;color:#1d2330}
+  h2 small{display:block;font-family:'Segoe UI',Arial,sans-serif;color:var(--coral);font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;margin-bottom:12px;font-weight:600}
+
+  .blurb{text-align:center;color:var(--muted);font-size:1.1rem;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:50px 56px;box-shadow:0 8px 30px rgba(29,35,48,.06)}
+  .blurb p{margin-bottom:18px}
+  .blurb .q{font-family:'Segoe UI',Arial,sans-serif;color:var(--teal);font-weight:700;font-size:1.35rem;letter-spacing:.12em;margin:26px 0}
+  .blurb .last{color:var(--text);font-weight:700;font-size:1.12rem}
+
+  .probe{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:46px 52px;position:relative;overflow:hidden;box-shadow:0 8px 30px rgba(29,35,48,.06)}
+  .probe h3{font-size:1rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:26px;font-family:'Segoe UI',Arial,sans-serif}
+  .probe p{margin-bottom:16px;color:#444c5e}
+  .probe .agi{font-family:'Segoe UI',Arial,sans-serif;color:var(--teal);text-align:center;letter-spacing:.12em;margin:24px 0;font-weight:600}
+  .fade{position:absolute;left:0;right:0;bottom:0;height:130px;background:linear-gradient(rgba(255,255,255,0),var(--card))}
+
+  .author{display:grid;grid-template-columns:260px 1fr;gap:44px;color:var(--muted);font-size:1.05rem;align-items:start}
+  .author p{margin-bottom:16px}
+  .author img{width:100%;border-radius:14px;box-shadow:0 12px 36px rgba(29,35,48,.18)}
+  @media(max-width:820px){.author{grid-template-columns:1fr}.author img{max-width:240px;margin:0 auto;display:block}}
+
+  .news{background:linear-gradient(135deg,#eaf5f4,#fdeef4);border:1px solid var(--line);border-radius:16px;padding:46px;text-align:center}
+  .news input{background:#fff;border:1.5px solid #d8d0c2;color:var(--text);padding:13px 16px;border-radius:999px;width:300px;max-width:70%;font-size:.95rem}
+
+  footer{border-top:1px solid var(--line);margin-top:50px;background:var(--bg-soft)}
+  .foot{max-width:1060px;margin:0 auto;padding:32px 24px;display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;color:#8a8fa0;font-family:'Segoe UI',Arial,sans-serif;font-size:.85rem}
+  .foot a{color:#6b7385}
+
+  @media(max-width:820px){
+    .hero-inner{grid-template-columns:1fr;padding-top:46px;text-align:center}
+    .cover-wrap{order:-1}
+    .cover-wrap img{transform:none}
+    h1{font-size:2.4rem}
+    nav ul{display:none}
+    .probe,.blurb{padding:32px 24px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo">KLAUS <span>HALBFAS</span></div>
+    <ul>
+      <li><a href="#buch">Das Buch</a></li>
+      <li><a href="#leseprobe">Leseprobe</a></li>
+      <li><a href="#autor">Autor</a></li>
+      <li><a href="#newsletter">Newsletter</a></li>
+      <li><a href="impressum.html">Impressum</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="kicker">Roman · Neuerscheinung 2026</div>
+      <h1>DAS RÄTSEL</h1>
+      <div class="subtitle">Die letzte Frage an die Menschheit</div>
+      <p class="hook">An einem Dienstag im November hört die Welt auf, gewöhnlich zu sein. Auf jedem Display der Erde steht dieselbe Botschaft. Absender: unbekannt. Frist: <strong>360 Stunden.</strong></p>
+      <a class="btn btn-primary sans" href="#" title="Link folgt nach Veröffentlichung">Jetzt bei Amazon bestellen</a>
+      <a class="btn btn-ghost sans" href="#leseprobe">Leseprobe lesen</a>
+      <p class="note">Erhältlich als Taschenbuch und Kindle eBook.</p>
+    </div>
+    <div class="cover-wrap">
+      <img src="cover-das-raetsel.jpg" alt="Buchcover: Das Rätsel – Die letzte Frage an die Menschheit von Klaus Halbfas">
+    </div>
+  </div>
+</div>
+
+<section id="buch">
+  <h2><small>Das Buch</small>Worum es geht</h2>
+  <div class="blurb">
+    <p>An einem Dienstag im November hört die Welt auf, gewöhnlich zu sein.<br>Auf jedem Display der Erde steht dieselbe Botschaft:</p>
+    <p class="q">WIE DEFINIERT IHR EINEN MENSCHEN?</p>
+    <p>Absender: unbekannt. Frist: 360 Stunden.</p>
+    <p>Johann Steinberger will die Frage ignorieren – wie alle.<br>Doch die Maschine hat ihn längst ausgewählt. Eine Reise beginnt:<br>in den Amazonas, nach Indien, Sibirien und Kyoto –<br>und zu einem Geheimnis tief unter Wien.</p>
+    <p class="last">Wer das Rätsel löst, verliert seine Gewissheiten.<br>Wer es ignoriert, verliert alles.</p>
+  </div>
+</section>
+
+<section id="leseprobe" style="padding-top:0">
+  <h2><small>Leseprobe</small>Prolog — Die Stimme</h2>
+  <div class="probe">
+    <p>Johann Steinberger wusste später nicht mehr, ob der Traum wirklich ein Traum gewesen war.</p>
+    <p>Alles begann mit einem Geräusch, einem tiefen, monotonen Summen, das weder laut noch bedrohlich wirkte. Es erinnerte eher an eine Frequenz, die man nicht mit den Ohren wahrnahm, sondern irgendwo tief im Körper spürte, als würde etwas direkt hinter den eigenen Gedanken schwingen. Sein erster Impuls war, das Geräusch einzuordnen, zu benennen, zu vermessen – so, wie er alles in seinem Leben einordnete. Doch es entzog sich jedem Vergleich.</p>
+    <p>Dann kam die Dunkelheit. Es war keine vollständige Dunkelheit, sondern ein grenzenloser schwarzer Raum ohne oben oder unten, ohne Orientierung und ohne jede erkennbare Grenze. Johann versuchte zu atmen, doch er war nicht mehr sicher, ob er überhaupt noch einen Körper besaß.</p>
+    <p>Ein einzelner Gedanke durchzuckte ihn: <em>Ich träume.</em> Doch unmittelbar darauf folgte ein zweiter, der sich viel schwerer anfühlte. <em>Was, wenn nicht?</em></p>
+    <p>Dann erschien Licht. Unzählige weiße Fragmente begannen zu leuchten und pulsierten in der Dunkelheit wie Milliarden winziger Partikel. Sie bewegten sich nicht chaotisch, sondern folgten einem Muster, das Johann gleichzeitig vertraut und fremd erschien – es erinnerte ihn an neuronale Verbindungen, an Sternbilder oder an etwas, das zwischen beidem lag.</p>
+    <p>Eine seltsame Ruhe breitete sich in ihm aus, und zugleich spürte er Angst. Dann hörte er die Stimme.</p>
+    <p class="agi">„Johann Steinberger."</p>
+    <p>Er wollte antworten, doch ihm wurde bewusst, dass er keinen Mund hatte und keine Möglichkeit, einen Laut von sich zu geben. Die Stimme sprach weiter.</p>
+    <p class="agi">„Du suchst nach Antworten."</p>
+    <p>Während die Worte in ihm nachhallten, begannen sich die leuchtenden Fragmente zu bewegen …</p>
+    <div class="fade"></div>
+  </div>
+  <p style="text-align:center;margin-top:28px"><a class="btn btn-ghost sans" href="#" title="Link folgt nach Veröffentlichung">Weiterlesen – das Buch bei Amazon</a></p>
+</section>
+
+<section id="autor" style="padding-top:0">
+  <h2><small>Über den Autor</small>Klaus Halbfas</h2>
+  <div class="author">
+    <img src="autor-klaus-halbfas.jpg" alt="Porträt von Klaus Halbfas">
+    <div>
+      <p>Klaus Halbfas ist Manager und Berater mit über 25 Jahren Erfahrung in Industrie und Technologie – von Messtechnik, Automotive und Elektronik bis zur Sicherheitstechnik. Als Executive Vice President Operations des Wiener Sicherheitstechnik-Herstellers EVVA verantwortet er Produktion und Betrieb eines Unternehmens, das mechanische Präzision mit digitaler Zutrittstechnologie verbindet – eine Welt, die Leser in <em>Das Rätsel</em> wiedererkennen werden. Mit Halbfas Consulting begleitet er zudem Unternehmen und Start-ups bei Transformation und Digitalisierung.</p>
+      <p>Künstliche Intelligenz ist für ihn längst mehr als ein Werkzeug: Als Mitbegründer der KAIROS GmbH, die KI-Lösungen für Unternehmen entwickelt, gestaltet er den Wandel aktiv mit. Dabei beobachtet er zwei Entwicklungen, die unsere Welt verändern: die kognitive KI, die denkt, schreibt und plant – und die physische KI, Roboter und Maschinen, die in unserer realen Welt handeln. Beides hält er für eine enorme Chance. Und zugleich für ein Risiko, dessen Ausmaß wir gerade erst zu begreifen beginnen.</p>
+      <p>Aus dieser Auseinandersetzung entstand sein Romandebüt <em>Das Rätsel</em>: ein Thriller über die Frage, was den Menschen ausmacht, wenn Maschinen fast alles können – und warum Bewusstsein und echte menschliche Begegnung wichtiger werden, nicht unwichtiger.</p>
+      <p class="sans" style="font-size:.9rem"><a href="https://de.linkedin.com/in/klaushalbfas" rel="me noopener" target="_blank">LinkedIn-Profil →</a></p>
+    </div>
+  </div>
+</section>
+
+<section id="newsletter" style="padding-top:0">
+  <div class="news">
+    <h2 style="margin-bottom:14px"><small>Auf dem Laufenden bleiben</small>Band II ist in Arbeit</h2>
+    <p style="color:var(--muted);margin-bottom:24px">Erfa
