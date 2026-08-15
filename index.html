@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Klaus Halbfas — Operations-Leader & Autor</title>
+<meta name="description" content="Klaus Halbfas: 25+ Jahre Führung in Industrie und Operations — Werkleitung, Lean Leadership und KI-Transformation. Autor von „Das Rätsel" (KI-Thriller) und „CHA[I]NCE — Der Engpass bist du".">
+<meta name="author" content="Klaus Halbfas">
+<link rel="canonical" href="https://klaus-halbfas.com/">
+
+<!-- Open Graph / Social -->
+<meta property="og:type" content="profile">
+<meta property="og:title" content="Klaus Halbfas — Operations-Leader & Autor">
+<meta property="og:description" content="25+ Jahre Führung in Industrie und Operations. Lean Leadership, KI-Transformation — und zwei Bücher über die Frage, was den Menschen ausmacht, wenn Maschinen fast alles können.">
+<meta property="og:image" content="https://klaus-halbfas.com/assets/author.jpg">
+<meta property="og:url" content="https://klaus-halbfas.com/">
+<meta property="og:locale" content="de_DE">
+<meta property="og:site_name" content="Klaus Halbfas">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Klaus Halbfas — Operations-Leader & Autor">
+<meta name="twitter:description" content="Werkleitung, Lean Leadership, KI-Transformation — und zwei Bücher.">
+<meta name="twitter:image" content="https://klaus-halbfas.com/assets/author.jpg">
+<meta name="theme-color" content="#04070e">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2304070e'/%3E%3Ccircle cx='32' cy='30' r='13' fill='none' stroke='%237fd4ff' stroke-width='2'/%3E%3Cpath d='M32 43 L32 54' stroke='%237fd4ff' stroke-width='2'/%3E%3Ccircle cx='32' cy='30' r='4' fill='%23ff2b3d'/%3E%3C/svg%3E">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Klaus Halbfas",
+  "url": "https://klaus-halbfas.com/",
+  "image": "https://klaus-halbfas.com/assets/author.jpg",
+  "jobTitle": "Operations-Leader & Autor",
+  "sameAs": ["https://de.linkedin.com/in/klaushalbfas"],
+  "knowsAbout": ["Operations Management", "Lean Management", "Werkleitung", "Künstliche Intelligenz", "Business Excellence", "Change-Management"],
+  "author": [
+    {
+      "@type": "Book",
+      "name": "Das Rätsel — Die letzte Frage an die Menschheit",
+      "url": "https://klaus-halbfas.com/das-raetsel",
+      "isbn": "979-8181516496"
+    }
+  ]
+}
+</script>
+
+<style>
+  /* Lokal gehostete Schriften — keine Verbindung zu Google-Servern (DSGVO) */
+  @font-face { font-family: 'Cinzel'; font-style: normal; font-weight: 400 600; font-display: swap; src: url('/assets/fonts/cinzel-400-600.woff2') format('woff2'); }
+  @font-face { font-family: 'Newsreader'; font-style: normal; font-weight: 400 500; font-display: swap; src: url('/assets/fonts/newsreader-400-500.woff2') format('woff2'); }
+  @font-face { font-family: 'Newsreader'; font-style: italic; font-weight: 400; font-display: swap; src: url('/assets/fonts/newsreader-italic-400.woff2') format('woff2'); }
+  @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/assets/fonts/ibmplexmono-400.woff2') format('woff2'); }
+  @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url('/assets/fonts/ibmplexmono-500.woff2') format('woff2'); }
+
+  :root {
+    --bg:        #04070e;
+    --bg-raise:  #080d1a;
+    --line:      #14203a;
+    --line-soft: #0e1830;
+    --ice:       #7fd4ff;
+    --ice-dim:   #4d7ea8;
+    --signal:    #ff2b3d;
+    --signal-lbl:#e0596b;
+    --silver:    #e8edf5;
+    --text:      #b9c4d6;
+    --muted:     #7f8da4;
+    --paper:     #f2ecdf;
+    --paper-2:   #eae2d0;
+    --ink:       #211d16;
+    --ink-soft:  #57503f;
+    --red-paper: #9c2531;
+    --line-paper:#d8cfba;
+    --serif:     'Newsreader', Georgia, serif;
+    --display:   'Cinzel', 'Times New Roman', serif;
+    --mono:      'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  }
+
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html { scroll-behavior: smooth; }
+  :focus-visible { outline: 2px solid var(--ice); outline-offset: 3px; border-radius: 2px; }
+  .on-paper :focus-visible { outline-color: var(--red-paper); }
+  .skip-link {
+    position: absolute; left: -9999px; top: 0; z-index: 10000;
+    font-family: var(--mono); font-size: 13px; color: #04070e; background: var(--ice);
+    padding: 12px 20px; text-decoration: none;
+  }
+  .skip-link:focus { left: 0; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: var(--serif); font-size: 18px; line-height: 1.65;
+    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+  ::selection { background: rgba(255,43,61,0.35); color: #fff; }
+  a { color: inherit; }
+  img { max-width: 100%; }
+
+  body::after {
+    content: ""; position: fixed; inset: -50%; z-index: 9990; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    opacity: 0.045; animation: grain 8s steps(10) infinite;
+  }
+  @keyframes grain {
+    0%,100% { transform: translate(0,0); } 10% { transform: translate(-3%,-5%); }
+    30% { transform: translate(4%,2%); } 50% { transform: translate(-2%,6%); }
+    70% { transform: translate(5%,-3%); } 90% { transform: translate(-4%,4%); }
+  }
+
+  [data-reveal] {
+    opacity: 0; transform: translateY(28px);
+    transition: opacity .9s cubic-bezier(.16,.84,.44,1), transform .9s cubic-bezier(.16,.84,.44,1);
+  }
+  [data-reveal].in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] { opacity: 1 !important; transform: none !important; }
+    html { scroll-behavior: auto; }
+    body::after { animation: none; }
+  }
+
+  .shell { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+  /* ============ NAV ============ */
+  nav.site {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    backdrop-filter: blur(18px) saturate(140%); -webkit-backdrop-filter: blur(18px) saturate(140%);
+    background: rgba(4,7,14,0.7); border-bottom: 1px solid rgba(127,212,255,0.08);
+  }
+  nav.site .inner {
+    max-width: 1200px; margin: 0 auto; height: 58px; padding: 0 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 18px;
+  }
+  .brand {
+    font-family: var(--display); font-size: 14px; font-weight: 600; letter-spacing: 0.24em;
+    color: var(--silver); text-decoration: none; white-space: nowrap;
+  }
+  .brand em { font-style: normal; color: var(--signal); }
+  .nav-links { display: flex; align-items: center; gap: 26px; }
+  .nav-links a.txt {
+    font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none; transition: color .25s ease;
+  }
+  .nav-links a.txt:hover { color: var(--ice); }
+  .btn-signal {
+    font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    color: #fff; text-decoration: none; background: var(--signal);
+    padding: 9px 18px; border-radius: 3px;
+    box-shadow: 0 0 22px rgba(255,43,61,0.35);
+    transition: background .25s ease, box-shadow .25s ease, transform .2s ease;
+    display: inline-block; border: none; cursor: pointer;
+  }
+  .btn-signal:hover { background: #ff4457; box-shadow: 0 0 34px rgba(255,43,61,0.55); transform: translateY(-1px); }
+  .btn-ghost {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ice); text-decoration: none;
+    padding: 9px 18px; border: 1px solid rgba(127,212,255,0.35); border-radius: 3px;
+    transition: border-color .25s ease, background .25s ease; display: inline-block;
+  }
+  .btn-ghost:hover { border-color: var(--ice); background: rgba(127,212,255,0.06); }
+  @media (max-width: 860px) { .nav-links a.txt { display: none; } }
+  @media (max-width: 480px) {
+    .brand { font-size: 12px; letter-spacing: 0.18em; }
+    .btn-signal { font-size: 11px; padding: 8px 13px; }
+  }
+
+  /* ============ HERO — MAGAZIN-COVER ============ */
+  .cover {
+    position: relative; min-height: 100svh; display: flex; flex-direction: column;
+    overflow: hidden; padding-top: 58px;
+  }
+  .cover .glowfield {
+    position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(55% 45% at 78% 40%, rgba(30,70,120,0.35) 0%, transparent 65%),
+      radial-gradient(30% 25% at 20% 85%, rgba(150,35,50,0.14) 0%, transparent 70%);
+  }
+  /* Masthead-Zeile wie ein Zeitungskopf */
+  .masthead {
+    position: relative; max-width: 1200px; width: 100%; margin: 0 auto; padding: 26px 24px 0;
+  }
+  .masthead .row {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 18px;
+    border-bottom: 1px solid var(--line); padding-bottom: 14px;
+  }
+  .masthead .issue, .masthead .place {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--muted);
+    white-space: nowrap;
+  }
+  .masthead .title {
+    font-family: var(--display); font-weight: 600; letter-spacing: 0.18em;
+    font-size: clamp(20px, 3.4vw, 38px); color: var(--silver); text-align: center; white-space: nowrap;
+  }
+  .masthead .title em { font-style: normal; color: var(--signal); }
+  @media (max-width: 700px) { .masthead .issue, .masthead .place { display: none; } .masthead .row { justify-content: center; } }
+
+  .cover-grid {
+    position: relative; flex: 1; max-width: 1200px; width: 100%; margin: 0 auto;
+    display: grid; grid-template-columns: 1.05fr 0.95fr; align-items: end; gap: 0;
+    padding: 0 24px;
+  }
+  .cover-copy { position: relative; z-index: 3; padding: 60px 0 90px; }
+  .kicker {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ice);
+  }
+  .cover-copy .kicker { color: var(--ice); }
+  .cover-copy h1 {
+    margin: 28px 0 0; font-family: var(--display); font-weight: 600;
+    font-size: clamp(44px, 7vw, 92px); line-height: 1.02; letter-spacing: 0.02em; color: var(--silver);
+  }
+  .cover-copy h1 .alt {
+    display: block; font-family: var(--serif); font-style: italic; font-weight: 400;
+    font-size: 0.82em; letter-spacing: 0; color: var(--signal); margin-top: 10px;
+    text-shadow: 0 0 40px rgba(255,43,61,0.35);
+  }
+  .cover-copy .desc { margin: 30px 0 0; max-width: 480px; font-size: 18px; line-height: 1.6; color: var(--text); }
+  .cover-ctas { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 38px; }
+
+  .cover-photo { position: relative; z-index: 1; align-self: stretch; display: flex; align-items: flex-end; }
+  .cover-photo .frame { position: relative; width: 100%; max-width: 520px; margin-left: auto; }
+  .cover-photo img {
+    display: block; width: 100%; height: auto;
+    filter: contrast(1.04) saturate(1.03) brightness(0.98);
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 12%, #000 100%);
+    mask-image: linear-gradient(180deg, transparent 0%, #000 12%, #000 100%);
+  }
+  .cover-photo .tint {
+    position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(180deg, rgba(4,7,14,0.32) 0%, transparent 38%, rgba(4,7,14,0.45) 100%);
+  }
+  .cover-photo .cold { display: none; }
+  .cover-photo .edge {
+    position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(90deg, var(--bg) 0%, transparent 22%);
+  }
+
+  /* Coverlines unten wie Magazin-Themenleiste */
+  .coverlines {
+    position: relative; z-index: 4; border-top: 1px solid var(--line);
+    background: rgba(4,7,14,0.75); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  }
+  .coverlines .inner {
+    max-width: 1200px; margin: 0 auto; padding: 0 24px;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+  }
+  .coverlines .c { padding: 22px 26px 24px 0; border-right: 1px solid var(--line-soft); }
+  .coverlines .c:last-child { border-right: none; }
+  .coverlines b { display: block; font-family: var(--display); font-weight: 500; font-size: 32px; line-height: 1; color: var(--silver); }
+  .coverlines i { display: block; font-style: normal; margin-top: 8px; font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ice); }
+  @media (max-width: 900px) {
+    .cover { min-height: 0; }
+    .cover-grid { grid-template-columns: 1fr; }
+    .cover-copy { padding: 44px 0 30px; order: 2; }
+    .cover-photo { order: 1; }
+    .cover-photo .frame { margin: 0 auto; max-width: 420px; }
+    .cover-photo .edge { background: linear-gradient(0deg, var(--bg) 0%, transparent 22%); }
+    .coverlines .inner { grid-template-columns: repeat(2, 1fr); }
+    .coverlines .c:nth-child(2) { border-right: none; }
+    .coverlines .c { padding: 18px 16px 18px 0; }
+  }
+
+  /* ============ PAPER-SEKTIONEN (Magazin-Artikel) ============ */
+  .paper { background: var(--paper); color: var(--ink); position: relative; }
+  .paper::before, .paper::after {
+    content: ""; position: absolute; left: 0; right: 0; height: 6px;
+    background: linear-gradient(90deg, transparent, rgba(156,37,49,0.5), transparent);
+  }
+  .paper::before { top: 0; }
+  .paper::after { bottom: 0; }
+  .paper .folio {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--ink-soft);
+    border-bottom: 1px solid var(--line-paper); padding-bottom: 14px;
+  }
+  .paper h2 {
+    margin: 34px 0 0; font-family: var(--display); font-weight: 500; color: var(--ink);
+    font-size: clamp(32px, 5.2vw, 56px); line-height: 1.08; letter-spacing: 0.015em;
+  }
+  .paper h2 em { font-style: italic; font-family: var(--serif); color: var(--red-paper); letter-spacing: 0; }
+  .article-cols {
+    margin-top: 44px; column-count: 2; column-gap: 56px; column-rule: 1px solid var(--line-paper);
+    font-size: 18.5px; line-height: 1.75; color: #33
+2c20;
+  }
+  .article-cols p { margin: 0 0 20px; break-inside: avoid-column; }
+  .article-cols p:first-of-type::first-letter {
+    font-family: var(--display); font-size: 4.6em; line-height: 0.8; color: var(--red-paper);
+    float: left; padding: 10px 14px 0 0;
+  }
+  @media (max-width: 800px) { .article-cols { column-count: 1; } }
+  .pullquote {
+    margin: 54px auto 0; max-width: 760px; text-align: center; position: relative; padding-top: 46px;
+  }
+  .pullquote::before {
+    content: "„"; position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+    font-family: var(--display); font-size: 110px; line-height: 1; color: rgba(156,37,49,0.25);
+  }
+  .pullquote blockquote {
+    margin: 0; font-family: var(--serif); font-style: italic;
+    font-size: clamp(23px, 3.4vw, 33px); line-height: 1.45; color: var(--ink);
+  }
+  .pullquote .src { display: block; margin-top: 18px; font-family: var(--mono); font-style: normal; font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--ink-soft); }
+
+  /* Stationen auf Papier — gedruckter Lebenslauf */
+  .cv-print { margin-top: 50px; border-top: 1px solid var(--ink); }
+  .cv-row {
+    display: grid; grid-template-columns: 130px 1fr; gap: 26px;
+    padding: 26px 4px; border-bottom: 1px solid var(--line-paper);
+  }
+  .cv-row .yr { font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em; color: var(--red-paper); padding-top: 6px; white-space: nowrap; }
+  .cv-row .yr.now { font-weight: 500; }
+  .cv-row h3 { margin: 0; font-family: var(--display); font-weight: 500; font-size: 21px; letter-spacing: 0.02em; color: var(--ink); }
+  .cv-row .org { margin: 4px 0 0; font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-soft); }
+  .cv-row p { margin: 10px 0 0; max-width: 660px; font-size: 15.5px; line-height: 1.6; color: #4a4335; }
+  @media (max-width: 620px) { .cv-row { grid-template-columns: 1fr; gap: 6px; } }
+
+  /* ============ EXPERTISE (dunkel, redaktionelle Liste) ============ */
+  .dark-sec { padding: 110px 0; }
+  .sec-head { max-width: 680px; }
+  .sec-head .kicker { font-family: var(--mono); font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); }
+  .sec-head h2 {
+    margin: 18px 0 0; font-family: var(--display); font-weight: 500; color: var(--silver);
+    font-size: clamp(30px, 5vw, 50px); line-height: 1.1; letter-spacing: 0.02em;
+  }
+  .sec-head .lede { margin: 20px 0 0; font-size: 19px; line-height: 1.65; color: var(--muted); }
+  .exp-list { margin-top: 60px; border-top: 1px solid var(--line); }
+  .exp {
+    display: grid; grid-template-columns: 160px 1fr; gap: 40px;
+    padding: 44px 4px; border-bottom: 1px solid var(--line);
+    transition: background .3s ease;
+  }
+  .exp:hover { background: rgba(127,212,255,0.025); }
+  .exp .n {
+    font-family: var(--display); font-weight: 400; font-size: 72px; line-height: 0.9;
+    color: transparent; -webkit-text-stroke: 1px var(--ice-dim);
+  }
+  .exp h3 { margin: 0; font-family: var(--display); font-weight: 500; font-size: 27px; letter-spacing: 0.02em; color: var(--silver); }
+  .exp p { margin: 14px 0 0; max-width: 640px; font-size: 16.5px; line-height: 1.65; color: var(--text); }
+  .exp .tags { margin: 18px 0 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .exp .tags span {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted); border: 1px solid var(--line); padding: 5px 10px; border-radius: 2px;
+  }
+  @media (max-width: 680px) { .exp { grid-template-columns: 1fr; gap: 14px; } .exp .n { font-size: 52px; } }
+
+  /* ============ AUTOR-BAND (kompakt, unten) ============ */
+  .author-band {
+    display: grid; grid-template-columns: 130px 1fr; gap: 40px; align-items: center;
+    border: 1px solid var(--line); background: linear-gradient(180deg, rgba(10,18,32,0.7) 0%, var(--bg-raise) 100%);
+    padding: 40px 44px;
+  }
+  .author-band img {
+    width: 100%; height: auto; display: block; border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.8), 0 18px 44px -16px rgba(0,0,0,0.9), 0 0 44px -8px rgba(64,140,220,0.35);
+    outline: 1px solid rgba(127,212,255,0.15); outline-offset: -1px;
+    transition: transform .35s cubic-bezier(.16,.84,.44,1);
+  }
+  .author-band a:hover img { transform: translateY(-5px); }
+  @media (max-width: 620px) { .author-band { grid-template-columns: 1fr; padding: 30px 26px; } .author-band > a { max-width: 130px; } }
+
+  /* ============ IMPULSE (Papier) ============ */
+  .impulse-grid { margin-top: 26px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0; }
+  .imp {
+    padding: 44px 42px; border-left: 1px solid var(--line-paper);
+    font-family: var(--serif); font-style: italic; font-size: 20px; line-height: 1.55; color: var(--ink);
+  }
+  .imp:first-child { border-left: none; }
+  .imp .tag { display: block; margin-top: 18px; font-family: var(--mono); font-style: normal; font-size: 9.5px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--red-paper); }
+  @media (max-width: 900px) { .imp { border-left: none; border-top: 1px solid var(--line-paper); padding: 34px 8px; } .imp:first-child { border-top: none; } }
+
+  /* ============ KONTAKT ============ */
+  .contact { position: relative; overflow: hidden; text-align: center; }
+  .contact .glow {
+    position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(60% 70% at 50% 115%, rgba(150,35,50,0.22) 0%, rgba(40,80,140,0.1) 45%, transparent 70%);
+  }
+  .contact .alt { position: relative; margin: 26px 0 0; font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; color: var(--muted); }
+  .contact .alt a { color: var(--ice); text-decoration: none; }
+
+  /* ============ FOOTER ============ */
+  footer.site { border-top: 1px solid var(--line-soft); background: #030509; }
+  footer.site .inner {
+    max-width: 1200px; margin: 0 auto; padding: 44px 24px;
+    display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between;
+    font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.08em; color: var(--muted);
+  }
+  footer.site nav { display: flex; flex-wrap: wrap; gap: 26px; }
+  footer.site a { color: var(--muted); text-decoration: none; text-transform: uppercase; letter-spacing: 0.14em; font-size: 10.5px; transition: color .25s ease; }
+  footer.site a:hover { color: var(--ice); }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#top">Zum Inhalt springen</a>
+
+<!-- NAV -->
+<nav class="site">
+  <div class="inner">
+    <a class="brand" href="/">KLAUS HALBFAS<em>.</em></a>
+    <div class="nav-links">
+      <a class="txt" href="#profil">Profil</a>
+      <a class="txt" href="#expertise">Expertise</a>
+      <a class="txt" href="#stationen">Stationen</a>
+      <a class="txt" href="https://de.linkedin.com/in/klaushalbfas" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn-signal" href="#kontakt">Kontakt</a>
+    </div>
+  </div>
+</nav>
+
+<main id="top">
+
+  <!-- HERO: MAGAZIN-COVER -->
+  <header class="cover">
+    <div class="glowfield" aria-hidden="true"></div>
+
+    <div class="masthead">
+      <div class="row">
+        <span class="issue">Profil · 2026</span>
+        <span class="title">KLAUS&nbsp;HALBFAS<em>.</em></span>
+        <span class="place">Operations · Lean · KI</span>
+      </div>
+    </div>
+
+    <div class="cover-grid">
+      <div class="cover-copy">
+        <span class="kicker">Operations-Leader</span>
+        <h1>Fabriken führen.<span class="alt">Zukunft gestalten.</span></h1>
+        <p class="desc">25 Jahre zwischen Shopfloor und Geschäftsleitung — vom Werkleiter bis zum Geschäftsführer, vom Familienunternehmen bis zum Milliardenkonzern. Heute an der Schnittstelle von operativer Exzellenz, Lean Leadership und künstlicher Intelligenz.</p>
+        <div class="cover-ctas">
+          <a class="btn-signal" href="#profil">Mein Profil</a>
+          <a class="btn-ghost" href="https://de.linkedin.com/in/klaushalbfas" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+      <div class="cover-photo">
+        <div class="frame">
+          <img src="/assets/author.jpg" alt="Porträt von Klaus Halbfas" width="520" height="520" fetchpriority="high">
+          <div class="tint" aria-hidden="true"></div>
+          <div class="cold" aria-hidden="true"></div>
+          <div class="edge" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="coverlines" data-reveal>
+      <div class="inner">
+        <div class="c"><b>25+</b><i>Jahre Führung</i></div>
+        <div class="c"><b>&gt;1.000</b><i>Mitarbeiter geführt</i></div>
+        <div class="c"><b>7</b><i>Branchen</i></div>
+        <div class="c"><b>250+</b><i>Mio. € Umsatzverantwortung</i></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- PROFIL: FEATURE-ARTIKEL AUF PAPIER -->
+  <section id="profil" class="paper on-paper">
+    <div class="shell" style="padding-top: 90px; padding-bottom: 96px;">
+      <div class="folio" data-reveal><span>Das Profil</span><span>klaus-halbfas.com</span><span>Seite 01</span></div>
+      <h2 data-reveal>Vom Shopfloor ins <em>KI-Zeitalter.</em></h2>
+      <div class="article-cols" data-reveal>
+        <p>Wer eine Fabrik führen will, muss beides können: die Halle lesen und die Bilanz. Klaus Halbfas hat in über 25 Jahren beides gelernt — als Werkleiter und Geschäftsführer in sieben Branchen, vom Familienunternehmen bis zum Milliardenkonzern, von Festo über ABB und SIEGENIA bis WAGO. Werke mit über 1.000 Mitarbeitern, Neubauten, Verlagerungen, Sanierungen: Operations ist für ihn kein Schreibtischthema, sondern Handwerk.</p>
+        <p>Sein Werkzeugkasten ist Lean — aber nicht als Methodenkatalog, sondern als Führungskultur: KATA, Shopfloor-Management, echte Verbesserung durch echte Beteiligung. Die Ergebnisse sind messbar. Zweistellige Produktivitätssprünge, Liefertreue jenseits der 98 Prozent, EBIT-Margen um 15 Punkte verbessert.</p>
+        <p>Heute verantwortet er die globalen Operations der EVVA Sicherheitstechnologie in Wien — und beschäftigt sich als Mitgründer eines KI-Unternehmens mit der Frage, wie künstliche Intelligenz die Fabrik verändert. Seine Antwort ist unbequem und hoffnungsvoll zugleich: Die Technik ist das kleinere Problem. Der Engpass — und die größte Chance — bleibt der Mensch.</p>
+      </div>
+      <div class="pullquote" data-reveal>
+        <blockquote>Die spannendste Frage der KI-Revolution ist nicht, was Maschinen können werden. Sondern was den Menschen ausmacht, wenn Maschinen fast alles können.</blockquote>
+        <span class="src">— Der rote Faden durch Arbeit und Bücher</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERTISE: DUNKLE REDAKTIONELLE LISTE -->
+  <section id="expertise" class="dark-sec">
+    <div class="shell">
+      <div class="sec-head" data-reveal>
+        <span class="kicker">Expertise</span>
+        <h2>Drei Felder. Ein Anspruch.</h2>
+        <p class="lede">Operative Exzellenz entsteht dort, wo Technik, Menschen und Methode zusammenkommen — heute mehr denn je unter dem Vorzeichen der künstlichen Intelligenz.</p>
+      </div>
+      <div class="exp-list">
+        <div class="exp" data-reveal>
+          <div class="n" aria-hidden="true">01</div>
+          <div>
+            <h3>Operations &amp; Werkleitung</h3>
+            <p>Führung von Werken und Standorten mit bis zu 1.000+ Mitarbeitern und mehr als 250 Mio. € Umsatzbeitrag. Werksneubauten, Verlagerungen, Produktionssysteme — von der Strategie bis zur Halle.</p>
+            <div class="tags"><span>Werkleitung</span><span>P&amp;L</span><span>Werksplanung</span><span>Supply Chain</span></div>
+          </div>
+        </div>
+        <div class="exp" data-reveal>
+          <div class="n" aria-hidden="true">02</div>
+          <div>
+            <h3>Lean &amp; Business Excellence</h3>
+            <p>Lean-Kultur aufbauen statt Methoden verordnen: KATA, Shopfloor-Management, TPM, Wertstromdesign. Erfahrung aus Aufbau, Optimierung und Sanierung — mit messbaren Ergebnissen.</p>
+            <div class="tags"><span>KATA</span><span>SFM</span><span>TPM</span><span>Restrukturierung</span></div>
+          </div>
+        </div>
+        <div class="exp" data-reveal>
+          <div class="n" aria-hidden="true">03</div>
+          <div>
+            <h3>KI &amp; Digitale Fabrik</h3>
+            <p>Mitgründer eines Software- und Beratungsunternehmens für KI-Integration. Digitalisierung der Fabrik, KI-gestützte Prozesse und die Führungsfrage dahinter: Wie bleibt der Mensch der Engpass, der zählt?</p>
+            <div class="tags"><span>KI-Transformation</span><span>Digitale Fabrik</span><span>AI Leadership</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATIONEN: GEDRUCKTER LEBENSLAUF AUF PAPIER -->
+  <section id="stationen" class="paper on-paper">
+    <div class="shell" style="padding-top: 90px; padding-bottom: 96px;">
+      <div class="folio" data-reveal><span>Stationen</span><span>1998 — heute</span><span>Seite 02</span></div>
+      <h2 data-reveal>Vom Shopfloor in die <em>Geschäftsleitung.</em></h2>
+      <div class="cv-print">
+        <div class="cv-row" data-reveal>
+          <span class="yr now">seit 2024</span>
+          <div>
+            <h3>Mitglied der Geschäftsleitung — Operations</h3>
+            <p class="org">EVVA Sicherheitstechnologie · Wien</p>
+            <p>Globale Verantwortung für die Operations eines europäischen Familienunternehmens der Sicherheitstechnik — mechanische Präzision trifft elektronische Zutrittssysteme.</p>
+          </div>
+        </div>
+        <div class="cv-row" data-reveal>
+          <span class="yr">2021 – 2024</span>
+          <div>
+            <h3>VP Werkleiter (Prokurist)</h3>
+            <p class="org">WAGO · Sondershausen</p>
+            <p>1.000+ Mitarbeiter, Umsatzbeitrag &gt; 250 Mio. €. Werksproduktivität +10 % bei Liefertreue &gt; 98 %; Lean-Kultur vertieft (KATA, SFM, TPM), Fabrik digitalisiert.</p>
+          </div>
+        </div>
+        <div class="cv-row" data-reveal>
+          <span class="yr">2019 – 2021</span>
+          <div>
+            <h3>Geschäftsführer</h3>
+            <p class="org">Realtec-Systems · Darmstadt</p>
+            <p>Startup der Sicherheitsbranche: Servicegrad auf 95 %, Erstzertifizierung ISO 9001, administrative Aufwände um 40 % reduziert.</p>
+          </div>
+        </div>
+        <div class="cv-row" data-reveal>
+          <span class="yr">2018 – 2019</span>
+          <div>
+            <h3>Director Consulting</h3>
+            <p class="org">Helbling Business Advisors · Düsseldorf</p>
+            <p>Operational Excellence in Restrukturierung und Sanierung — inklusive Leitung eines Sanierungsprojekts mit deutlicher Ertragssteigerung.</p>
+          </div>
+        </div>
+        <div class="cv-row" data-reveal>
+          <span class="yr">2016 – 2018</span>
+          <div>
+            <h3>CEO / Geschäftsführer</h3>
+            <p class="org">ERKO Präzisions- &amp; Steuerungstechnik · Duderstadt</p>
+            <p>Automotive-Zulieferer (Tier 1/2): Kundenrückstände auf null, ERP-Ersteinführung, Zertifizierung IATF 16949, Kundenbeziehungen zurückgewonnen.</p>
+          </div>
+        </div>
+        <div class="cv-row" data-reveal>
+          <span class="yr">2012 – 2016</span>
+          <div>
+            <h3>Werk- &amp; Standortleiter (Prokurist)</h3>
+            <p class="org">SIEGENIA · Siegen</p>
+            <p>900+ Mitarbeiter, 275 Mio. € Umsatzbeitrag. Durchlaufzeiten −30 %, Bestände −30 %, Liefertreue &gt; 97 %; Neubau einer Galvanik in unter 1,5 Jahren.</p>
+          </div>
+        </div>
+        <div class="cv-row" data-reveal>
+          <span class="yr">2007 – 2012</span>
+          <div>
+            <h3>Werk- &amp; Standortleiter (Prokurist)</h3>
+            <p class="org">ABB Automation Products · Göttingen</p>
+            <p>EBIT-Marge +15 %-Punkte, Liefertreue &gt; 98 %, Produktkosten ausgewählter Reihen −50 %; Standortstrategie im globalen Konzernumfeld.</p>
+          </div>
+        </div>
+        <div class="cv-row" data-reveal>
+          <span class="yr">1998 – 2007</span>
+          <div>
+            <h3>Leitungsfunktionen Produktion, Qualität &amp; Consulting</h3>
+            <p class="org">Festo · Sankt Ingbert</p>
+            <p>Vom Lean-Consultant zum Produktionsleiter: KAIZEN-Programme, Gruppenarbeit, Prämiensysteme, Werkserweiterung um 17.000 m².</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMPULSE AUF PAPIER -->
+  <section class="paper on-paper">
+    <div class="shell" style="padding-top: 84px; padding-bottom: 90px;">
+      <div class="folio" data-reveal><span>Impulse</span><span>Gedanken, die bleiben</span><span>Seite 03</span></div>
+      <div class="impulse-grid" data-reveal>
+        <div class="imp">„Die Menschheit hat Intelligenz gebaut, bevor sie Weisheit verstand."</div>
+        <div class="imp">„Die größte Gefahr ist nicht, dass die künstliche Intelligenz mächtiger wird. Die größte Gefahr ist, dass der Mensch vergisst, was ihn zum Menschen macht."</div>
+        <div class="imp">„Freiheit ohne Verantwortung ist Chaos. Verantwortung ohne Freiheit ist Gefangenschaft."</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DER AUTOR: KOMPAKTE ERWÄHNUNG UNTEN -->
+  <section id="autor" class="dark-sec" style="padding-bottom: 0;">
+    <div class="shell">
+      <div class="author-band" data-reveal>
+        <a href="/das-raetsel" aria-label="Zur Buchseite von Das Rätsel">
+          <img src="/assets/cover.jpg" alt="Buchcover: Das Rätsel von Klaus Halbfas" width="120" height="180" loading="lazy">
+        </a>
+        <div>
+          <span class="kicker" style="color: var(--muted);">Der Autor</span>
+          <h2 style="margin: 12px 0 0; font-family: var(--display); font-weight: 500; font-size: clamp(24px, 3.4vw, 34px); letter-spacing: 0.02em; color: var(--silver); line-height: 1.15;">Neben der Fabrik: die Schreibmaschine.</h2>
+          <p style="margin: 14px 0 0; max-width: 560px; font-size: 16.5px; line-height: 1.65; color: var(--muted);">Klaus Halbfas schreibt über das, was ihn beruflich umtreibt. Sein Romandebüt <em style="color: var(--text);">„Das Rätsel — Die letzte Frage an die Menschheit"</em> (KI-Thriller, 432 Seiten) ist als Taschenbuch erhältlich.</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px;">
+            <a class="btn-ghost" href="/das-raetsel">Zum Buch</a>
+            <a class="btn-signal" href="https://www.amazon.de/dp/B0HBCK1KJP" target="_blank" rel="noopener">Bei Amazon</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KONTAKT -->
+  <section id="kontakt" class="contact dark-sec">
+    <div class="glow" aria-hidden="true"></div>
+    <div class="shell">
+      <div data-reveal style="max-width: 620px; margin: 0 auto;">
+        <div class="sec-head" style="text-align: center; margin: 0 auto;">
+          <span class="kicker" style="color: var(--signal-lbl);">Kontakt</span>
+          <h2>Lassen Sie uns sprechen.</h2>
+          <p class="lede" style="margin-left: auto; margin-right: auto; max-width: 520px;">Ob Operations, Lean Leadership, KI in der Fabrik — oder meine Bücher: Ich freue mich über den Austausch.</p>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-top: 38px;">
+          <a class="btn-signal" href="mailto:klaus@halbfas.com">E-Mail schreiben</a>
+          <a class="btn-ghost" href="https://de.linkedin.com/in/klaushalbfas" target="_blank" rel="noopener">Auf LinkedIn vernetzen</a>
+        </div>
+        <p class="alt">klaus@halbfas.com</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="site">
+  <div class="inner">
+    <div>© <span data-year>2026</span> Klaus Halbfas</div>
+    <nav>
+      <a href="/das-raetsel">Das Rätsel</a>
+      <a href="/impressum.html">Impressum</a>
+      <a href="/datenschutz.html">Datenschutz</a>
+      <a href="https://de.linkedin.com/in/klaushalbfas" target="_blank" rel="noopener">LinkedIn</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var y = new Date().getFullYear();
+  document.querySelectorAll('[data-year]').forEach(function (el) { el.textContent = y; });
+
+  var reveals = document.querySelectorAll('[data-reveal]');
+  if (reduce || !('IntersectionObserver' in window)) {
+    reveals.forEach(function (el) { el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -7% 0px' });
+    reveals.forEach(function (el) { io.observe(el); });
+  }
+})();
+</script>
+
+</body>
+</html>
