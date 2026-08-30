@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Waterline Design Language</title>
+<meta name="description" content="Waterline — the design language for KEEL, the operations management platform.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&family=Spline+Sans+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="waterline.css">
+<style>
+/* ============ spec-page chrome (builds on waterline.css) ============ */
+* { box-sizing: border-box; margin: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+body {
+  font-family: var(--wl-font-ui);
+  font-size: var(--wl-text-md);
+  line-height: 1.6;
+  color: var(--wl-ink);
+  background: var(--wl-ground);
+  -webkit-font-smoothing: antialiased;
+}
+:focus-visible { outline: 2px solid var(--wl-beacon); outline-offset: 2px; border-radius: 4px; }
+::selection { background: var(--wl-shoal-strong); }
+
+/* ---- masthead ---- */
+.masthead {
+  position: sticky; top: 0; z-index: 40;
+  display: flex; align-items: center; gap: var(--wl-2);
+  height: 56px; padding: 0 clamp(16px, 4vw, 40px);
+  background: color-mix(in srgb, var(--wl-ground) 92%, transparent);
+  backdrop-filter: saturate(1.1) blur(2px);
+  border-bottom: 1px solid var(--wl-line);
+}
+.masthead .mark {
+  display: flex; align-items: baseline; gap: 10px;
+  font-weight: 800; letter-spacing: 0.02em; font-size: 15px;
+  text-decoration: none; color: var(--wl-ink);
+}
+.masthead .mark .of {
+  font: 500 11px/1 var(--wl-font-data);
+  letter-spacing: 0.12em; color: var(--wl-ink-3); text-transform: uppercase;
+}
+.masthead nav { display: flex; gap: 4px; margin-left: auto; overflow-x: auto; }
+.masthead nav a {
+  font: 500 12px/1 var(--wl-font-ui);
+  color: var(--wl-ink-2); text-decoration: none;
+  padding: 8px 10px; border-radius: 5px; white-space: nowrap;
+  transition: background var(--wl-t-fast) var(--wl-ease), color var(--wl-t-fast) var(--wl-ease);
+}
+.masthead nav a:hover { background: var(--wl-shoal); color: var(--wl-ink); }
+.theme-btn {
+  flex: none; display: inline-flex; align-items: center; gap: 7px;
+  font: 500 11px/1 var(--wl-font-data); letter-spacing: 0.08em;
+  color: var(--wl-ink-2); background: var(--wl-surface);
+  border: 1px solid var(--wl-line-strong); border-radius: 999px;
+  padding: 7px 12px; cursor: pointer;
+  transition: border-color var(--wl-t-fast) var(--wl-ease);
+}
+.theme-btn:hover { border-color: var(--wl-ink-2); }
+.theme-btn .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--wl-beacon); }
+
+/* ---- hero ---- */
+.hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--wl-line); }
+.hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.hero .inner {
+  position: relative; z-index: 2;
+  max-width: 1080px; margin: 0 auto;
+  padding: clamp(64px, 11vh, 130px) clamp(16px, 4vw, 40px) clamp(56px, 9vh, 110px);
+}
+.hero .coord {
+  font: 500 11px/1.6 var(--wl-font-data);
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--wl-ink-3);
+  margin-bottom: 22px;
+}
+.hero .coord b { color: var(--wl-beacon); font-weight: 600; }
+.hero h1 {
+  font-size: clamp(52px, 9vw, 112px);
+  font-weight: 850; font-stretch: 100%;
+  line-height: 0.96; letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+.hero h1 .ln { display: block; }
+.hero h1 .ln:last-child { color: var(--wl-ink-3); }
+.hero .standfirst {
+  max-width: 34em; margin-top: 28px;
+  font-size: clamp(15px, 1.8vw, 18px); line-height: 1.6; color: var(--wl-ink-2);
+}
+.hero .standfirst b { color: var(--wl-ink); font-weight: 600; }
+.hero .cta { display: flex; gap: 10px; margin-top: 32px; flex-wrap: wrap; }
+
+/* ---- sections ---- */
+.shell { max-width: 1080px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); }
+section.sounding { padding: clamp(56px, 9vh, 104px) 0; border-bottom: 1px solid var(--wl-line); }
+section.sounding:last-of-type { border-bottom: 0; }
+.s-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 8px; }
+.s-head .depth {
+  font: 500 11px/1 var(--wl-font-data); letter-spacing: 0.12em;
+  color: var(--wl-beacon); white-space: nowrap;
+}
+.s-head h2 {
+  font-size: clamp(26px, 3.6vw, 36px); font-weight: 750;
+  letter-spacing: -0.02em; line-height: 1.1; text-wrap: balance;
+}
+.lede { max-width: 60ch; color: var(--wl-ink-2); margin: 10px 0 36px; font-size: var(--wl-text-md); }
+.lede b { color: var(--wl-ink); font-weight: 600; }
+.prose { max-width: 62ch; color: var(--wl-ink-2); }
+.prose b { color: var(--wl-ink); font-weight: 600; }
+h3.sub {
+  font: 600 12px/1 var(--wl-font-data); letter-spacing: 0.11em; text-transform: uppercase;
+  color: var(--wl-ink-3); margin: 44px 0 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+h3.sub::after { content: ""; flex: 1; border-top: 1px solid var(--wl-line); }
+
+/* ---- bearings ---- */
+.bearings { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1px; background: var(--wl-line); border: 1px solid var(--wl-line); border-radius: 8px; overflow: hidden; }
+.bearing { background: var(--wl-surface); padding: 24px; }
+.bearing .no { font: 500 11px/1 var(--wl-font-data); color: var(--wl-beacon); letter-spacing: 0.1em; }
+.bearing h4 { font-size: 17px; font-weight: 700; letter-spacing: -0.01em; margin: 10px 0 8px; }
+.bearing p { font-size: 13.5px; color: var(--wl-ink-2); line-height: 1.55; }
+
+/* ---- color plates ---- */
+.plate-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+.cplate { border: 1px solid var(--wl-line); border-radius: 8px; overflow: hidden; background: var(--wl-surface); }
+.cplate .chip { height: 88px; position: relative; }
+.cplate .chip .usage {
+  position: absolute; left: 10px; bottom: 8px;
+  font: 500 10px/1 var(--wl-font-data); letter-spacing: 0.1em; text-transform: uppercase;
+}
+.cplate figcaption { padding: 10px 12px; }
+.cplate .nm { font-weight: 650; font-size: 13.5px; letter-spacing: -0.01em; }
+.cplate .hx { font: 500 11px/1.7 var(--wl-font-data); color: var(--wl-ink-3); }
+.cplate .role { font-size: 12px; color: var(--wl-ink-2); line-height: 1.45; margin-top: 4px; }
+.doctrine {
+  border-left: 2px solid var(--wl-beacon);
+  padding: 6px 0 6px 20px; margin: 36px 0;
+  max-width: 58ch;
+}
+.doctrine p { font-size: clamp(17px, 2.2vw, 21px); font-weight: 600; letter-spacing: -0.015em; line-height: 1.4; text-wrap: balance; }
+.doctrine .src { font: 500 11px/1 var(--wl-font-data); letter-spacing: 0.1em; text-transform: uppercase; color: var(--wl-ink-3); margin-top: 10px; display: block; }
+
+/* two-theme strip */
+.theme-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 720px) { .theme-pair { grid-template-columns: 1fr; } }
+.mini-ui { border-radius: 8px; border: 1px solid; overflow: hidden; font-family: var(--wl-font-ui); }
+.mini-ui .cap { font: 500 10px/1 var(--wl-font-data); letter-spacing: 0.12em; text-transform: uppercase; padding: 10px 14px; border-bottom: 1px solid; }
+
+/* ---- type specimens ---- */
+.spec-row { display: grid; grid-template-columns: 150px 1fr; gap: 20px; align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--wl-line); }
+.spec-row:last-child { border-bottom: 0; }
+.spec-row .meta { font: 500 11px/1.7 var(--wl-font-data); color: var(--wl-ink-3); }
+@media (max-width: 640px) { .spec-row { grid-template-columns: 1fr; gap: 6px; } }
+
+/* ---- swatch demo boards ---- */
+.board {
+  border: 1px solid var(--wl-line); border-radius: 8px;
+  background: var(--wl-surface); padding: 24px;
+  display: flex; flex-wrap: wrap; gap: 14px; align-items: center;
+}
+.board--col { flex-direction: column; align-items: stretch; }
+.board + .board { margin-top: 12px; }
+
+/* ---- do / don't ---- */
+.dd { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 720px) { .dd { grid-template-columns: 1fr; } }
+.dd .cell { border: 1px solid var(--wl-line); border-radius: 8px; background: var(--wl-surface); padding: 18px; }
+.dd .tag { font: 600 10px/1 var(--wl-font-data); letter-spacing: 0.12em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 12px; }
+.dd .tag::before { content: ""; width: 7px; height: 7px; }
+.dd .do .tag { color: var(--wl-ok); } .dd .do .tag::before { background: var(--wl-ok); border-radius: 50%; }
+.dd .dont .tag { color: var(--wl-crit); } .dd .dont .tag::before { background: var(--wl-crit); }
+.dd p { font-size: 13px; color: var(--wl-ink-2); }
+.dd .ex { margin-top: 12px; padding: 12px; border-radius: 6px; background: var(--wl-well); border: 1px solid var(--wl-line); font-size: 13px; }
+
+/* ---- motion lab ---- */
+.motion-lab { display: flex; flex-direction: column; gap: 18px; }
+.lane { display: grid; grid-template-columns: 140px 1fr; align-items: center; gap: 16px; }
+.lane .track { height: 40px; border-radius: 6px; background: var(--wl-well); border: 1px solid var(--wl-line); position: relative; overflow: hidden; }
+.lane .puck {
+  position: absolute; top: 6px; left: 6px; width: 26px; height: 26px; border-radius: 6px;
+  background: var(--wl-beacon);
+}
+.lane.run .puck { transition: left var(--dur, 240ms) var(--wl-ease); left: calc(100% - 32px); }
+@media (max-width: 640px) { .lane { grid-template-columns: 1fr; } }
+
+/* ---- token ledger ---- */
+.tok-wrap { overflow-x: auto; border: 1px solid var(--wl-line); border-radius: 8px; background: var(--wl-surface); }
+.tok { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 560px; }
+.tok th { font: 600 10px/1 var(--wl-font-data); letter-spacing: 0.09em; text-transform: uppercase; text-align: left; color: var(--wl-ink-3); padding: 12px 14px; border-bottom: 1px solid var(--wl-line-strong); }
+.tok td { padding: 9px 14px; border-bottom: 1px solid var(--wl-line); vertical-align: middle; }
+.tok tr:last-child td { border-bottom: 0; }
+.tok code { font: 500 12px/1 var(--wl-font-data); color: var(--wl-ink); }
+.tok .sw { display: inline-block; width: 16px; height: 16px; border-radius: 4px; border: 1px solid var(--wl-line-strong); vertical-align: -3px; margin-right: 8px; }
+.tok .c2 { color: var(--wl-ink-2); }
+
+/* ---- console pattern figure ---- */
+.anatomy { border: 1px solid var(--wl-line-strong); border-radius: 10px; overflow: hidden; background: var(--wl-surface); }
+.anatomy .note { font: 500 10px/1.5 var(--wl-font-data); letter-spacing: 0.08em; color: var(--wl-ink-3); text-transform: uppercase; }
+
+footer.colophon {
+  border-top: 1px solid var(--wl-line);
+  padding: 40px clamp(16px, 4vw, 40px) 64px;
+}
+footer.colophon .inner { max-width: 1080px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 24px; justify-content: space-between; align-items: baseline; }
+footer.colophon .f1 { font-weight: 800; letter-spacing: 0.02em; }
+footer.colophon .f2 { font: 500 11px/1.8 var(--wl-font-data); letter-spacing: 0.08em; text-transform: uppercase; color: var(--wl-ink-3); }
+img { max-width: 100%; }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <a class="mark" href="#top">WATERLINE <span class="of">for KEEL</span></a>
+  <nav aria-label="Sections">
+    <a href="#bearings">Bearings</a>
+    <a href="#color">Color</a>
+    <a href="#type">Type</a>
+    <a href="#space">Space</a>
+    <a href="#depth">Depth</a>
+    <a href="#motion">Motion</a>
+    <a href="#components">Components</a>
+    <a href="#patterns">Patterns</a>
+    <a href="#voice">Voice</a>
+    <a href="#tokens">Tokens</a>
+  </nav>
+  <button class="theme-btn" id="themeBtn" aria-label="Switch theme"><span class="dot"></span><span id="themeLabel">SYSTEM</span></button>
+</header>
+
+<div class="hero" id="top">
+  <canvas id="contours" aria-hidden="true"></canvas>
+  <div class="inner">
+    <p class="coord">Design language · v1.0 · <b>KEEL</b> operations platform</p>
+    <h1><span class="ln">Waterline</span><span class="ln">holds the course.</span></h1>
+    <p class="standfirst">
+      A keel is the spine that keeps a ship steady. Waterline is the design language built on that job:
+      an operations tool drawn like a <b>navigation chart</b> — calm paper, precise contours, and one rule
+      that governs everything: <b>if it's colored, it means something.</b>
+    </p>
+    <div class="cta">
+      <a class="wl-btn wl-btn--beacon" href="demo.html">Open the KEEL Console demo</a>
+      <a class="wl-btn wl-btn--line" href="#tokens">Token reference</a>
+    </div>
+  </div>
+</div>
+
+<main class="shell">
+
+<!-- ================= BEARINGS ================= -->
+<section class="sounding" id="bearings">
+  <div class="s-head"><span class="depth">SOUNDING 01</span><h2>Five bearings</h2></div>
+  <p class="lede">Operations software fails in one of two ways: it panics, or it hides. Waterline is built to do neither.
+  Every rule in this document descends from five bearings — fixed points the system never argues with.</p>
+
+  <div class="bearings">
+    <div class="bearing">
+      <span class="no">B–1</span>
+      <h4>The waterline</h4>
+      <p>Every screen has one horizontal datum. Above it: the calm summary — what the operation is doing right now, readable in three seconds. Below it: the working depth — dense tables, detail, action. Never more than one waterline per screen.</p>
+    </div>
+    <div class="bearing">
+      <span class="no">B–2</span>
+      <h4>Color is state</h4>
+      <p>The chrome is colorless chart-paper. Beacon magenta marks what you can act on; buoyage colors mark how things are going. There is no decorative color anywhere. When something turns red, it is the only red thing you see.</p>
+    </div>
+    <div class="bearing">
+      <span class="no">B–3</span>
+      <h4>Contours, not shadows</h4>
+      <p>Depth is drawn the way charts draw it: hairlines and tonal steps. No blur, no glass, no glow. Only layers that truly float — menus, dialogs, hails — cast a shadow, and it is the only shadow in the system.</p>
+    </div>
+    <div class="bearing">
+      <span class="no">B–4</span>
+      <h4>Numbers are the interface</h4>
+      <p>An operations tool is read like an instrument. Every figure is set in the data face with tabular numerals, right-aligned, same precision down a column. A number you can't compare to its neighbor is a number wasted.</p>
+    </div>
+    <div class="bearing">
+      <span class="no">B–5</span>
+      <h4>One motion</h4>
+      <p>A single easing curve, three durations, and a purpose test: motion exists to show causality — this opened that, this moved there. Nothing loops, nothing pulses for attention, nothing moves to decorate.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= COLOR ================= -->
+<section class="sounding" id="color">
+  <div class="s-head"><span class="depth">SOUNDING 02</span><h2>Color: chart paper &amp; signal</h2></div>
+  <p class="lede">On a real nautical chart, magenta is reserved by international convention for what humans added to the water —
+  lights, routes, cautions, things a navigator acts on. Waterline adopts the convention whole:
+  <b>the ground is paper, the accent is Beacon, and status speaks buoyage.</b></p>
+
+  <div class="doctrine">
+    <p>Chrome earns no color. An element is magenta because you can act on it, or buoyage because it reports a condition — never because it wanted to look important.</p>
+    <span class="src">Waterline doctrine · after chart convention INT1</span>
+  </div>
+
+  <h3 class="sub">Daywatch — the working theme</h3>
+  <div class="plate-grid">
+    <figure class="cplate"><div class="chip" style="background:#F3F1E9"><span class="usage" style="color:#79817B">GROUND</span></div>
+      <figcaption><div class="nm">Chart Paper</div><div class="hx">#F3F1E9</div><p class="role">The page. Warm like sea-bleached stock, never pure white.</p></figcaption></figure>
+    <figure class="cplate"><div class="chip" style="background:#FAF9F4;border-bottom:1px solid #D9D5C7"><span class="usage" style="color:#79817B">SURFACE</span></div>
+      <figcaption><div class="nm">Plate</div><div class="hx">#FAF9F4</div><p class="role">Raised panels and cards — half a step off the paper.</p></figcaption></figure>
+    <figure class="cplate"><div class="chip" style="background:#1A2421"><span class="usage" style="color:#F3F1E9">TEXT</span></div>
+      <figcaption><div class="nm">Deep Ink</div><div class="hx">#1A2421</div><p class="role">Primary text. A green-black, like chart ink aged at sea.</p></figcaption></figure>
+    <figure class="cplate"><div class="chip" style="background:#B62E63"><span class="usage" style="color:#fff">INTERACTIVE</span></div>
+      <figcaption><div class="nm">Beacon</div><div class="hx">#B62E63</div><p class="role">The one interactive color. Primary actions, links, selection marks, focus.</p></figcaption></figure>
+    <figure class="cplate"><div class="chip" style="background:#DCE7E0"><span class="usage" style="color:#4A5450">SELECTION</span></div>
+      <figcaption><div class="nm">Shoal</div><div class="hx">#DCE7E0</div><p class="role">Hover and selection wash — the shallow-water tint.</p></figcaption></figure>
+    <figure class="cplate"><div class="chip" style="background:#D9D5C7"><span class="usage" style="color:#4A5450">STRUCTURE</span></div>
+      <figcaption><div class="nm">Contour</div><div class="hx">#D9D5C7</div><p class="role">Hairlines. They carry all structure so shadows don't have to.</p></figcaption></figure>
+  </div>
+
+  <h3 class="sub">Buoyage — the status system</h3>
+  <p class="prose" style="margin-bottom:20px">Four conditions, named for the marks that keep ships off the rocks. Each pairs a text-safe
+  ink with a wash for fills, and each carries a <b>distinct tick shape</b> — circle, diamond, square — so state survives color-blindness
+  and grayscale printing.</p>
+  <div class="plate-grid">
+    <figure class="cplate"><div class="chip" style="background:#177049"><span class="usage" style="color:#fff">ON COURSE</span></div>
+      <figcaption><div class="nm">Starboard</div><div class="hx">#177049 · ● circle</div><p class="role">Running as planned. Used sparingly — green everywhere means green nowhere.</p></figcaption></figure>
+    <figure class="cplate"><div class="chip" style="background:#8F6700"><span class="usage" style="color:#fff">ATTENTION</span></div>
+      <figcaption><div class="nm">Quarantine</div><div class="hx">#8F6700 · ◆ diamond</div><p class="role">Drifting: due soon, running low, trending wrong.</p></figcaption></figure>
+    <figure class="cplate"><div class="chip" style="background:#B93A21"><span class="usage" style="color:#fff">OFF COURSE</span></div>
+      <figcaption><div class="nm">Port</div><div class="hx">#B93A21 · ■ square</div><p class="role">Stopped, failed, breached. Also the destructive-action color.</p></figcaption></figure>
+    <figure class="cplate"><div class="chip" style="background:#5C6A64"><span class="usage" style="color:#fff">UNKNOWN</span></div>
+      <figcaption><div class="nm">Fog</div><div class="hx">#5C6A64 · ○ hollow</div><p class="role">Paused, offline, awaiting data. Honest about not knowing.</p></figcaption></figure>
+  </div>
+
+  <h3 class="sub">Nightwatch — the dark theme</h3>
+  <p class="prose" style="margin-bottom:20px">Ship bridges run dimmed displays at night to protect the crew's night vision.
+  Nightwatch follows: not an inversion but a re-mix — bone ink on deep water, contours barely brighter than the ground,
+  Beacon lifted so it keeps its signal value. Try the theme switch in the masthead; both themes are first-class.</p>
+
+  <div class="theme-pair">
+    <div class="mini-ui" style="background:#F3F1E9;border-color:#D9D5C7">
+      <div class="cap" style="color:#79817B;border-color:#D9D5C7">Daywatch</div>
+      <div style="padding:18px;display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span style="font:600 13px/1 var(--wl-font-ui);color:#1A2421">Line 3 · Extrusion</span>
+          <span style="font:500 10px/1 var(--wl-font-data);letter-spacing:.05em;color:#177049;background:rgba(23,112,73,.11);padding:4px 9px;border-radius:999px">● ON COURSE</span>
+        </div>
+        <div style="font:500 26px/1 var(--wl-font-data);color:#1A2421">94.2<span style="font-size:13px;color:#79817B"> % OEE</span></div>
+        <div style="height:6px;border-radius:99px;background:#EAE7DC;border:1px solid #D9D5C7"><div style="height:100%;width:94%;background:#177049;border-radius:99px"></div></div>
+        <button style="align-self:flex-start;font:600 12px/1 var(--wl-font-ui);color:#fff;background:#B62E63;border:0;border-radius:6px;padding:9px 14px;cursor:pointer">Assign work order</button>
+      </div>
+    </div>
+    <div class="mini-ui" style="background:#0D1514;border-color:#263230">
+      <div class="cap" style="color:#6F7973;border-color:#263230">Nightwatch</div>
+      <div style="padding:18px;display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span style="font:600 13px/1 var(--wl-font-ui);color:#E8E5D8">Line 3 · Extrusion</span>
+          <span style="font:500 10px/1 var(--wl-font-data);letter-spacing:.05em;color:#4EC38E;background:rgba(78,195,142,.13);padding:4px 9px;border-radius:999px">● ON COURSE</span>
+        </div>
+        <div style="font:500 26px/1 var(--wl-font-data);color:#E8E5D8">94.2<span style="font-size:13px;color:#6F7973"> % OEE</span></div>
+        <div style="height:6px;border-radius:99px;background:#0A100F;border:1px solid #263230"><div style="height:100%;width:94%;background:#4EC38E;border-radius:99px"></div></div>
+        <button style="align-self:flex-start;font:600 12px/1 var(--wl-font-ui);color:#23070F;background:#E5719F;border:0;border-radius:6px;padding:9px 14px;cursor:pointer">Assign work order</button>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sub">Rules of engagement</h3>
+  <div class="dd">
+    <div class="cell do">
+      <span class="tag">Do</span>
+      <p>Reserve Beacon for interaction. One primary action per waterline region. When a screen is healthy, it should be almost entirely paper and ink.</p>
+    </div>
+    <div class="cell dont">
+      <span class="tag">Don't</span>
+      <p>Use buoyage colors for branding, charts-by-default, or emphasis. Never place two solid Beacon buttons side by side. Never introduce a hue outside this page.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TYPE ================= -->
+<section class="sounding" id="type">
+  <div class="s-head"><span class="depth">SOUNDING 03</span><h2>Typography: two voices</h2></div>
+  <p class="lede">Waterline speaks in two voices. <b>Schibsted Grotesk</b> is the human voice — labels, prose, headings; confident,
+  slightly warm, unmistakably not another neo-grotesque default. <b>Spline Sans Mono</b> is the instrument voice — every number,
+  ID, timestamp, and annotation, the way figures sit printed on a chart margin.</p>
+
+  <div class="board board--col">
+    <div class="spec-row"><span class="meta">Display · 850<br>38–112px · −0.035em</span><span style="font-size:clamp(30px,5vw,52px);font-weight:850;letter-spacing:-0.035em;line-height:1">Hold the course.</span></div>
+    <div class="spec-row"><span class="meta">Section · 750<br>26px · −0.02em</span><span style="font-size:26px;font-weight:750;letter-spacing:-0.02em">Shift handover, 06:00</span></div>
+    <div class="spec-row"><span class="meta">Body · 400<br>15px · 1.6</span><span style="max-width:56ch;display:inline-block;color:var(--wl-ink-2)">Work order 2481 was reassigned to Line 2 after the scheduled changeover. Throughput recovered within eleven minutes; no downstream orders were affected.</span></div>
+    <div class="spec-row"><span class="meta">Data · Mono 500<br>tabular-nums</span><span class="wl-data" style="font-size:22px">98.4&nbsp;% &nbsp;·&nbsp; 1,204 u/h &nbsp;·&nbsp; 06:41:09</span></div>
+    <div class="spec-row"><span class="meta">Annotation · Mono<br>12px · +0.09em caps</span><span class="wl-annot">WO-2481 · LINE 3 · LAST SOUNDING 06:41 UTC</span></div>
+  </div>
+
+  <h3 class="sub">Setting rules</h3>
+  <div class="dd">
+    <div class="cell do">
+      <span class="tag">Do</span>
+      <p>Set every number in the data face with <code class="wl-data" style="font-size:12px">tabular-nums</code>. Right-align numeric columns. Keep prose near 65 characters. Uppercase only the annotation voice, always letter-spaced.</p>
+    </div>
+    <div class="cell dont">
+      <span class="tag">Don't</span>
+      <p>Mix voices in one figure ("1,204" in the UI face next to "u/h" in mono). Bold entire rows for emphasis — hoist a pennant instead. Use italics anywhere in the product.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SPACE ================= -->
+<section class="sounding" id="space">
+  <div class="s-head"><span class="depth">SOUNDING 04</span><h2>Space: the fathom grid</h2></div>
+  <p class="lede">One fathom = 8px. All spacing is whole fathoms, with a half-fathom (4px) reserved for the inside of dense
+  components. The result is a rhythm you can feel down a whole page — and the waterline layout that gives KEEL its shape.</p>
+
+  <div class="board" style="gap:20px">
+    <div style="display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap">
+      <div><div style="width:4px;height:4px;background:var(--wl-beacon)"></div><div class="wl-annot" style="margin-top:8px">½ · 4</div></div>
+      <div><div style="width:8px;height:8px;background:var(--wl-beacon)"></div><div class="wl-annot" style="margin-top:8px">1 · 8</div></div>
+      <div><div style="width:16px;height:16px;background:var(--wl-beacon)"></div><div class="wl-annot" style="margin-top:8px">2 · 16</div></div>
+      <div><div style="width:24px;height:24px;background:var(--wl-beacon)"></div><div class="wl-annot" style="margin-top:8px">3 · 24</div></div>
+      <div><div style="width:32px;height:32px;background:var(--wl-beacon)"></div><div class="wl-annot" style="margin-top:8px">4 · 32</div></div>
+      <div><div style="width:48px;height:48px;background:var(--wl-beacon)"></div><div class="wl-annot" style="margin-top:8px">6 · 48</div></div>
+      <div><div style="width:64px;height:64px;background:var(--wl-beacon)"></div><div class="wl-annot" style="margin-top:8px">8 · 64</div></div>
+    </div>
+  </div>
+
+  <h3 class="sub">The waterline layout</h3>
+  <p class="prose" style="margin-bottom:20px">The anatomy of every KEEL screen. Above the waterline, gauges answer
+  <b>"how are we doing?"</b> — sparse, large figures, generous air. Below it, the ledger answers <b>"what needs me?"</b> —
+  dense, keyboard-first, built for hours of work. The datum itself is a drawn rule, labeled, always in the same place.</p>
+
+  <figure class="anatomy" aria-label="Waterline screen anatomy">
+    <div style="display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--wl-line)">
+      <span style="font-weight:800;font-size:12px;letter-spacing:.02em">KEEL</span>
+      <span class="note">HELM — global nav · search · account</span>
+    </div>
+    <div style="display:grid;grid-template-columns:150px 1fr;min-height:280px">
+      <div style="border-right:1px solid var(--wl-line);padding:12px">
+        <span class="note">RAIL<br>sections</span>
+      </div>
+      <div style="padding:16px;display:flex;flex-direction:column">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+          <div style="border:1px solid var(--wl-line);border-radius:6px;padding:10px"><span class="note">GAUGE</span></div>
+          <div style="border:1px solid var(--wl-line);border-radius:6px;padding:10px"><span class="note">GAUGE</span></div>
+          <div style="border:1px solid var(--wl-line);border-radius:6px;padding:10px"><span class="note">GAUGE</span></div>
+          <div style="border:1px solid var(--wl-line);border-radius:6px;padding:10px"><span class="note">GAUGE</span></div>
+        </div>
+        <hr class="wl-waterline" style="margin:20px 0">
+        <div style="flex:1;border:1px solid var(--wl-line);border-radius:6px;padding:10px;display:flex;align-items:flex-start">
+          <span class="note">LEDGER — the working depth: tables, boards, detail panes</span>
+        </div>
+      </div>
+    </div>
+  </figure>
+</section>
+
+<!-- ================= DEPTH ================= -->
+<section class="sounding" id="depth">
+  <div class="s-head"><span class="depth">SOUNDING 05</span><h2>Depth: contours, not glass</h2></div>
+  <p class="lede">The last decade of interface fashion rendered depth as material — glass, frost, blur, glow. Waterline goes the
+  other way, back to the chart table: <b>depth is drawn.</b> A surface is higher because a hairline bounds it and its tone steps
+  half a shade off the paper. It's calmer, it's faster to render, and it never fights the data for attention.</p>
+
+  <div class="board" style="align-items:stretch">
+    <div style="flex:1;min-width:230px;display:flex;flex-direction:column;gap:10px">
+      <span class="wl-annot">Level 0 — Paper</span>
+      <div style="height:84px;border-radius:6px;background:var(--wl-ground);border:1px dashed var(--wl-line)"></div>
+      <p style="font-size:12.5px;color:var(--wl-ink-2)">The chart itself. Content sits directly on it.</p>
+    </div>
+    <div style="flex:1;min-width:230px;display:flex;flex-direction:column;gap:10px">
+      <span class="wl-annot">Level 1 — Plate</span>
+      <div style="height:84px;border-radius:6px;background:var(--wl-surface);border:1px solid var(--wl-line)"></div>
+      <p style="font-size:12.5px;color:var(--wl-ink-2)">Hairline + half-step tone. All panels, cards, gauges.</p>
+    </div>
+    <div style="flex:1;min-width:230px;display:flex;flex-direction:column;gap:10px">
+      <span class="wl-annot">Level 2 — Cast</span>
+      <div style="height:84px;border-radius:10px;background:var(--wl-surface);border:1px solid var(--wl-line-strong);box-shadow:var(--wl-cast)"></div>
+      <p style="font-size:12.5px;color:var(--wl-ink-2)">The only shadow in the system — menus, dialogs, hails. If it doesn't float over content, it doesn't cast.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MOTION ================= -->
+<section class="sounding" id="motion">
+  <div class="s-head"><span class="depth">SOUNDING 06</span><h2>Motion: the wake</h2></div>
+  <p class="lede">One easing — <code class="wl-data" style="font-size:13px">cubic-bezier(0.22, 0.61, 0.21, 1)</code> — a firm start
+  that settles like water closing behind a hull. Three durations, and nothing else. Press play; each puck runs the same curve.</p>
+
+  <div class="board board--col motion-lab">
+    <div class="lane" style="--dur:120ms"><span class="meta wl-annot">FAST · 120ms<br>state change</span><div class="track"><div class="puck"></div></div></div>
+    <div class="lane" style="--dur:240ms"><span class="meta wl-annot">MOVE · 240ms<br>reveal, reorder</span><div class="track"><div class="puck"></div></div></div>
+    <div class="lane" style="--dur:420ms"><span class="meta wl-annot">SLOW · 420ms<br>layer entry</span><div class="track"><div class="puck"></div></div></div>
+    <div><button class="wl-btn wl-btn--line" id="runMotion" type="button">Run the wake</button></div>
+  </div>
+
+  <div class="dd" style="margin-top:14px">
+    <div class="cell do"><span class="tag">Do</span><p>Animate to show causality: a drawer follows its trigger; a removed row collapses so the eye keeps its place. Honor <code class="wl-data" style="font-size:12px">prefers-reduced-motion</code> completely.</p></div>
+    <div class="cell dont"><span class="tag">Don't</span><p>Pulse, bounce, shimmer, or loop. A critical state is announced by a pennant and a hail — never by blinking. Nothing in Waterline moves while you are reading.</p></div>
+  </div>
+</section>
+
+<!-- ================= COMPONENTS ================= -->
+<section class="sounding" id="components">
+  <div class="s-head"><span class="depth">SOUNDING 07</span><h2>Components</h2></div>
+  <p class="lede">The working parts, live in this page's stylesheet. Nautical names aren't decoration — they encode the rules:
+  a <b>pennant</b> is hoisted, never painted on; a <b>hail</b> is called across, then lowered; a <b>gauge</b> is read, not clicked.</p>
+
+  <h3 class="sub">Commands — buttons</h3>
+  <div class="board wl">
+    <button class="wl-btn wl-btn--beacon" type="button">Start production run</button>
+    <button class="wl-btn wl-btn--line" type="button">Schedule</button>
+    <button class="wl-btn wl-btn--quiet" type="button">Export</button>
+    <button class="wl-btn wl-btn--port" type="button">Abort run</button>
+    <button class="wl-btn wl-btn--beacon" type="button" disabled>Start production run</button>
+  </div>
+  <p class="prose" style="font-size:13px;margin-top:12px">One Beacon command per waterline region. Destructive commands wear Port and always confirm. Quiet commands live in toolbars and rows.</p>
+
+  <h3 class="sub">Pennants — status</h3>
+  <div class="board wl">
+    <span class="wl-pennant wl-pennant--ok">On course</span>
+    <span class="wl-pennant wl-pennant--warn">Due 14:00</span>
+    <span class="wl-pennant wl-pennant--crit">Line down</span>
+    <span class="wl-pennant wl-pennant--fog">Awaiting data</span>
+  </div>
+
+  <h3 class="sub">Fields</h3>
+  <div class="board wl" style="align-items:flex-end">
+    <div class="wl-field" style="min-width:220px">
+      <label for="f1">Work order</label>
+      <input class="wl-input" id="f1" placeholder="WO-0000" value="WO-2481">
+      <span class="wl-hint">IDs are assigned at intake.</span>
+    </div>
+    <div class="wl-field wl-field--invalid" style="min-width:220px">
+      <label for="f2">Batch size</label>
+      <input class="wl-input" id="f2" value="12 800">
+      <span class="wl-hint">Exceeds Line 3 capacity (8,000). Split the batch or pick another line.</span>
+    </div>
+    <div class="wl-field" style="flex-direction:row;align-items:center;gap:10px">
+      <input type="checkbox" class="wl-switch" id="f3" checked>
+      <label for="f3" style="text-transform:none;letter-spacing:0;font:500 13px/1 var(--wl-font-ui);color:var(--wl-ink)">Notify shift lead</label>
+    </div>
+  </div>
+
+  <h3 class="sub">Gauges — above the waterline</h3>
+  <div class="wl" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;background:transparent">
+    <div class="wl-gauge"><span class="wl-gauge__label">OEE · Plant</span><span class="wl-gauge__value">91.7<small> %</small></span><span class="wl-gauge__delta wl-gauge__delta--ok">▲ 1.2 vs last shift</span></div>
+    <div class="wl-gauge"><span class="wl-gauge__label">Throughput</span><span class="wl-gauge__value">1,204<small> u/h</small></span><span class="wl-gauge__delta wl-gauge__delta--fog">— steady</span></div>
+    <div class="wl-gauge"><span class="wl-gauge__label">Open incidents</span><span class="wl-gauge__value">3</span><span class="wl-gauge__delta wl-gauge__delta--crit">▲ 1 critical</span></div>
+    <div class="wl-gauge"><span class="wl-gauge__label">On-time orders</span><span class="wl-gauge__value">96.4<small> %</small></span><span class="wl-gauge__delta wl-gauge__delta--warn">▼ 0.8 this week</span></div>
+  </div>
+
+  <h3 class="sub">Ledger — the working table</h3>
+  <div class="wl" style="border:1px solid var(--wl-line);border-radius:8px;overflow:hidden;background:var(--wl-surface)">
+    <div style="overflow-x:auto">
+    <table class="wl-ledger" style="min-width:640px">
+      <thead><tr><th>Order</th><th>Line</th><th>Status</th><th class="wl-num">Qty</th><th class="wl-num">Complete</th><th class="wl-num">Due</th></tr></thead>
+      <tbody>
+        <tr><td><span class="wl-id">WO-2481</span> Housing, anodized</td><td>Line 3</td><td><span class="wl-pennant wl-pennant--ok">Running</span></td><td class="wl-num">8,000</td><td class="wl-num">62 %</td><td class="wl-num">Sep 02</td></tr>
+        <tr aria-selected="true"><td><span class="wl-id">WO-2482</span> Gasket set, EPDM</td><td>Line 1</td><td><span class="wl-pennant wl-pennant--warn">Due 14:00</span></td><td class="wl-num">2,400</td><td class="wl-num">88 %</td><td class="wl-num">Aug 30</td></tr>
+        <tr><td><span class="wl-id">WO-2479</span> Valve body, brass</td><td>Line 4</td><td><span class="wl-pennant wl-pennant--crit">Line down</span></td><td class="wl-num">1,150</td><td class="wl-num">31 %</td><td class="wl-num">Sep 01</td></tr>
+        <tr><td><span class="wl-id">WO-2485</span> Bracket, laser-cut</td><td>—</td><td><span class="wl-pennant wl-pennant--fog">Unscheduled</span></td><td class="wl-num">5,600</td><td class="wl-num">0 %</td><td class="wl-num">Sep 05</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+  <p class="prose" style="font-size:13px;margin-top:12px">Row height 40px, hover washes Shoal, selection washes Shoal-strong. The selected row is where keyboard focus lives; <span class="wl-kbd">J</span>/<span class="wl-kbd">K</span> move it, <span class="wl-kbd">↵</span> opens the detail pane.</p>
+
+  <h3 class="sub">Hails — notifications</h3>
+  <div class="board wl" style="background:var(--wl-ground);align-items:flex-start">
+    <div class="wl-hail wl-hail--ok"><div><b>Run started.</b> WO-2481 on Line 3 — first units at 07:12.</div></div>
+    <div class="wl-hail wl-hail--crit"><div><b>Line 4 stopped.</b> Spindle overtemp at 06:41. Incident INC-0093 opened and assigned to M. Okafor.</div></div>
+  </div>
+  <p class="prose" style="font-size:13px;margin-top:12px">A hail states what happened, then what the system already did about it. Success hails lower themselves after 5 seconds; Port hails stay until acknowledged.</p>
+</section>
+
+<!-- ================= PATTERNS ================= -->
+<section class="sounding" id="patterns">
+  <div class="s-head"><span class="depth">SOUNDING 08</span><h2>Patterns</h2></div>
+  <p class="lede">How the parts assemble into KEEL itself. The full working assembly is the
+  <a href="demo.html" style="color:var(--wl-beacon);font-weight:600;text-decoration:none">KEEL Console demo</a> — these are the
+  standing orders it follows.</p>
+
+  <div class="bearings" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
+    <div class="bearing">
+      <h4>Three-second rule</h4>
+      <p>Anyone walking past a screen learns the operation's condition in three seconds, from the gauges alone. If a gauge needs explanation, it measures the wrong thing.</p>
+    </div>
+    <div class="bearing">
+      <h4>Exceptions first</h4>
+      <p>Ledgers sort trouble to the top by default: Port, then Quarantine, then Fog, then Starboard. A healthy operation reads as a quiet page — and that quiet is information.</p>
+    </div>
+    <div class="bearing">
+      <h4>Detail slides, never navigates</h4>
+      <p>Selecting a row opens a detail pane below the waterline; the ledger keeps its scroll and selection. Full-page navigation is reserved for changing section, not inspecting a record.</p>
+    </div>
+    <div class="bearing">
+      <h4>Empty states give a heading</h4>
+      <p>An empty ledger names the fact and the next action: "No unscheduled orders. Intake closes at 16:00." — never an illustration, never an apology.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= VOICE ================= -->
+<section class="sounding" id="voice">
+  <div class="s-head"><span class="depth">SOUNDING 09</span><h2>Voice: the logbook</h2></div>
+  <p class="lede">KEEL writes like a good watch log: <b>fact, consequence, action.</b> Short declaratives, present tense,
+  numbers over adjectives, zero exclamation marks. The interface is an instrument; instruments don't emote.</p>
+
+  <div class="dd">
+    <div class="cell do">
+      <span class="tag">Do</span>
+      <p>Name the fact, then the handled consequence.</p>
+      <div class="ex"><b>Line 4 stopped.</b> Spindle overtemp at 06:41. Incident opened and assigned to M. Okafor.</div>
+      <div class="ex" style="margin-top:8px"><b>Batch split.</b> 12,800 units → Line 3 (8,000) and Line 1 (4,800). Due dates unchanged.</div>
+    </div>
+    <div class="cell dont">
+      <span class="tag">Don't</span>
+      <p>Apologize, decorate, or bury the number.</p>
+      <div class="ex">Oops! Something went wrong with one of your lines 😞 Please try again later.</div>
+      <div class="ex" style="margin-top:8px">Great news! Your batch was successfully split into two awesome sub-batches!</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TOKENS ================= -->
+<section class="sounding" id="tokens">
+  <div class="s-head"><span class="depth">SOUNDING 10</span><h2>Token reference</h2></div>
+  <p class="lede">The complete surface of the system, shipped as CSS custom properties in
+  <code class="wl-data" style="font-size:13px">waterline.css</code>. Values shown for Daywatch; Nightwatch re-maps the same names.</p>
+
+  <div class="tok-wrap">
+    <table class="tok">
+      <thead><tr><th>Token</th><th>Daywatch</th><th>Role</th></tr></thead>
+      <tbody>
+        <tr><td><code>--wl-ground</code></td><td class="wl-data"><span class="sw" style="background:#F3F1E9"></span>#F3F1E9</td><td class="c2">Chart Paper — the page</td></tr>
+        <tr><td><code>--wl-surface</code></td><td class="wl-data"><span class="sw" style="background:#FAF9F4"></span>#FAF9F4</td><td class="c2">Plate — raised panels</td></tr>
+        <tr><td><code>--wl-well</code></td><td class="wl-data"><span class="sw" style="background:#EAE7DC"></span>#EAE7DC</td><td class="c2">Sunken fields, input wells</td></tr>
+        <tr><td><code>--wl-line</code> / <code>--wl-line-strong</code></td><td class="wl-data"><span class="sw" style="background:#D9D5C7"></span>#D9D5C7 · #B9B4A2</td><td class="c2">Contours — all structure</td></tr>
+        <tr><td><code>--wl-ink</code> / <code>-2</code> / <code>-3</code></td><td class="wl-data"><span class="sw" style="background:#1A2421"></span>#1A2421 · #4A5450 · #79817B</td><td class="c2">Deep Ink — text hierarchy</td></tr>
+        <tr><td><code>--wl-beacon</code></td><td class="wl-data"><span class="sw" style="background:#B62E63"></span>#B62E63</td><td class="c2">Beacon — everything actionable</td></tr>
+        <tr><td><code>--wl-shoal</code></td><td class="wl-data"><span class="sw" style="background:#DCE7E0"></span>#DCE7E0</td><td class="c2">Selection &amp; hover wash</td></tr>
+        <tr><td><code>--wl-ok / warn / crit / fog</code></td><td class="wl-data"><span class="sw" style="background:#177049"></span><span class="sw" style="background:#8F6700"></span><span class="sw" style="background:#B93A21"></span><span class="sw" style="background:#5C6A64"></span>buoyage</td><td class="c2">Status inks + 11–14% washes</td></tr>
+        <tr><td><code>--wl-font-ui</code></td><td class="wl-data">Schibsted Grotesk</td><td class="c2">Human voice</td></tr>
+        <tr><td><code>--wl-font-data</code></td><td class="wl-data">Spline Sans Mono</td><td class="c2">Instrument voice — all figures</td></tr>
+        <tr><td><code>--wl-text-*</code></td><td class="wl-data">12 · 13 · 15 · 19 · 26 · 38</td><td class="c2">Type scale (px)</td></tr>
+        <tr><td><code>--wl-1 … --wl-8</code></td><td class="wl-data">8 · 16 · 24 · 32 · 48 · 64</td><td class="c2">Fathom grid (+4px half)</td></tr>
+        <tr><td><code>--wl-radius*</code></td><td class="wl-data">4 · 6 · 10</td><td class="c2">Chips · standard · floating</td></tr>
+        <tr><td><code>--wl-ease</code></td><td class="wl-data">cubic-bezier(.22,.61,.21,1)</td><td class="c2">The wake — the only easing</td></tr>
+        <tr><td><code>--wl-t-*</code></td><td class="wl-data">120 · 240 · 420 ms</td><td class="c2">Fast · move · slow</td></tr>
+        <tr><td><code>--wl-cast</code></td><td class="wl-data">0 8px 24px rgba(20,30,27,.14)</td><td class="c2">The only shadow (Level 2)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+</main>
+
+<footer class="colophon">
+  <div class="inner">
+    <div>
+      <div class="f1">WATERLINE</div>
+      <div class="f2">The design language for KEEL · v1.0 · 2026</div>
+    </div>
+    <div class="f2">Chart Paper · Deep Ink · Beacon · Buoyage<br>Schibsted Grotesk · Spline Sans Mono</div>
+  </div>
+</footer>
+
+<script>
+/* ---- theme: system → light → dark cycle, persisted ---- */
+(function () {
+  var btn = document.getElementById('themeBtn');
+  var label = document.getElementById('themeLabel');
+  var order = ['system', 'light', 'dark'];
+  var mode = 'system';
+  try { mode = localStorage.getItem('wl-theme') || 'system'; } catch (e) {}
+  function apply(m) {
+    mode = m;
+    if (m === 'system') document.documentElement.removeAttribute('data-theme');
+    else document.documentElement.setAttribute('data-theme', m);
+    label.textContent = m.toUpperCase();
+    try { localStorage.setItem('wl-theme', m); } catch (e) {}
+  }
+  apply(mode);
+  btn.addEventListener('click', function () {
+    apply(order[(order.indexOf(mode) + 1) % order.length]);
+  });
+})();
+
+/* ---- hero: drifting depth contours ---- */
+(function () {
+  var cv = document.getElementById('contours');
+  var ctx = cv.getContext('2d');
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var t = 0, raf;
+  function css(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+  function size() {
+    var r = cv.parentElement.getBoundingClientRect();
+    var d = Math.min(window.devicePixelRatio || 1, 2);
+    cv.width = r.width * d; cv.height = r.height * d;
+    ctx.setTransform(d, 0, 0, d, 0, 0);
+  }
+  function draw() {
+    var w = cv.clientWidth, h = cv.clientHeight;
+    ctx.clearRect(0, 0, w, h);
+    ctx.lineWidth = 1;
+    var line = css('--wl-line') || '#D9D5C7';
+    var beacon = css('--wl-beacon') || '#B62E63';
+    var n = 9;
+    for (var i = 0; i < n; i++) {
+      var yBase = h * (0.30 + 0.075 * i);
+      ctx.beginPath();
+      for (var x = 0; x <= w; x += 8) {
+        var y = yBase
+          + Math.sin(x * 0.006 + t * 0.4 + i * 1.7) * (5 + i * 2.2)
+          + Math.sin(x * 0.0021 - t * 0.22 + i * 0.9) * (8 + i * 2.8);
+        if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      if (i === 2) { ctx.strokeStyle = beacon; ctx.globalAlpha = 0.55; }
+      else { ctx.strokeStyle = line; ctx.globalAlpha = 0.85 - i * 0.06; }
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+    }
+    t += 0.012;
+    if (!reduced) raf = requestAnimationFrame(draw);
+  }
+  size(); draw();
+  window.addEventListener('resize', function () { size(); if (reduced) draw(); });
+  new MutationObserver(function () { if (reduced) draw(); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+})();
+
+/* ---- motion lab ---- */
+(function () {
+  var btn = document.getElementById('runMotion');
+  if (!btn) return;
+  var lanes = document.querySelectorAll('.lane');
+  btn.addEventListener('click', function () {
+    lanes.forEach(function (l) { l.classList.remove('run'); });
+    void document.body.offsetWidth;
+    requestAnimationFrame(function () {
+      lanes.forEach(function (l) { l.classList.add('run'); });
+    });
+    setTimeout(function () { lanes.forEach(function (l) { l.classList.remove('run'); }); }, 1600);
+  });
+})();
+</script>
+</body>
+</html>

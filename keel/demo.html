@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KEEL Console</title>
+<meta name="description" content="KEEL operations console — a working demonstration of the Waterline design language.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..900&family=Spline+Sans+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="waterline.css">
+<style>
+* { box-sizing: border-box; margin: 0; }
+body {
+  font-family: var(--wl-font-ui);
+  font-size: var(--wl-text-md);
+  color: var(--wl-ink);
+  background: var(--wl-ground);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+:focus-visible { outline: 2px solid var(--wl-beacon); outline-offset: 2px; border-radius: 4px; }
+::selection { background: var(--wl-shoal-strong); }
+a { color: inherit; }
+
+/* ---- helm ---- */
+.helm {
+  display: flex; align-items: center; gap: 16px;
+  height: 52px; padding: 0 16px;
+  background: var(--wl-surface);
+  border-bottom: 1px solid var(--wl-line);
+  position: sticky; top: 0; z-index: 30;
+}
+.helm .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: 0.03em; font-size: 15px; text-decoration: none; }
+.helm .brand svg { display: block; }
+.helm .crumb { font: 500 12px/1 var(--wl-font-data); color: var(--wl-ink-3); letter-spacing: 0.06em; }
+.helm .crumb b { color: var(--wl-ink-2); font-weight: 500; }
+.helm .search {
+  margin-left: auto;
+  display: flex; align-items: center; gap: 8px;
+  font: 400 13px/1 var(--wl-font-ui); color: var(--wl-ink-3);
+  background: var(--wl-well); border: 1px solid var(--wl-line);
+  border-radius: 6px; padding: 7px 10px; min-width: 180px; cursor: text;
+}
+.helm .search .wl-kbd { margin-left: auto; }
+.helm .who {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--wl-shoal-strong); color: var(--wl-ink);
+  display: grid; place-items: center;
+  font: 600 11px/1 var(--wl-font-data);
+  border: 1px solid var(--wl-line-strong);
+}
+
+/* ---- frame ---- */
+.frame { display: grid; grid-template-columns: 200px 1fr; min-height: calc(100vh - 52px); }
+@media (max-width: 880px) { .frame { grid-template-columns: 1fr; } .rail-wrap { display: none; } }
+.rail-wrap { border-right: 1px solid var(--wl-line); padding: 12px 8px; display: flex; flex-direction: column; }
+.rail-wrap .wl-annot { padding: 10px 10px 6px; }
+.rail-wrap .foot { margin-top: auto; padding: 12px 10px; }
+
+/* ---- deck ---- */
+.deck { padding: 20px clamp(16px, 3vw, 32px) 48px; min-width: 0; }
+.deck-head { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 18px; }
+.deck-head h1 { font-size: 22px; font-weight: 750; letter-spacing: -0.015em; }
+.deck-head .stamp { font: 500 11px/1 var(--wl-font-data); letter-spacing: 0.08em; color: var(--wl-ink-3); text-transform: uppercase; }
+.deck-head .acts { margin-left: auto; display: flex; gap: 8px; }
+
+.gauges { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+
+.below { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 16px; align-items: start; }
+@media (max-width: 1100px) { .below { grid-template-columns: 1fr; } }
+
+.pane-note { font: 500 11px/1.6 var(--wl-font-data); color: var(--wl-ink-3); letter-spacing: 0.05em; }
+.chart-box { padding: 12px 16px 8px; }
+.chart-box canvas { width: 100%; height: 150px; display: block; }
+.legend { display: flex; gap: 16px; padding: 0 16px 12px; }
+.legend span { font: 500 10px/1 var(--wl-font-data); letter-spacing: 0.08em; text-transform: uppercase; color: var(--wl-ink-3); display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 14px; height: 2px; background: var(--wl-ink-2); }
+.legend .tgt i { background: var(--wl-beacon); height: 0; border-top: 2px dashed var(--wl-beacon); }
+
+.feed { display: flex; flex-direction: column; }
+.feed-item { display: flex; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--wl-line); font-size: 13px; }
+.feed-item:last-child { border-bottom: 0; }
+.feed-item .t { font: 500 11px/1.7 var(--wl-font-data); color: var(--wl-ink-3); white-space: nowrap; }
+.feed-item .m { color: var(--wl-ink-2); line-height: 1.5; }
+.feed-item .m b { color: var(--wl-ink); font-weight: 600; }
+.feed-item .pip { width: 7px; height: 7px; border-radius: 50%; margin-top: 6px; flex: none; background: var(--wl-fog); }
+.feed-item.ok .pip { background: var(--wl-ok); }
+.feed-item.warn .pip { background: var(--wl-warn); border-radius: 2px; transform: rotate(45deg); }
+.feed-item.crit .pip { background: var(--wl-crit); border-radius: 1px; }
+
+.hint-bar { display: flex; gap: 14px; align-items: center; padding: 10px 16px; border-top: 1px solid var(--wl-line); }
+.hint-bar span { font: 500 10px/1 var(--wl-font-data); letter-spacing: 0.06em; color: var(--wl-ink-3); display: inline-flex; align-items: center; gap: 6px; }
+
+.hails { position: fixed; right: 16px; bottom: 16px; display: flex; flex-direction: column; gap: 10px; z-index: 50; }
+</style>
+</head>
+<body class="wl">
+
+<header class="helm">
+  <a class="brand" href="index.html" title="Waterline design language">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path d="M10 1 L10 15 M10 15 C10 15 5.5 14.5 3 11" stroke="var(--wl-ink)" stroke-width="2.2" stroke-linecap="round"/>
+      <path d="M1 17.5 C4 15.5 7 19.5 10 17.5 C13 15.5 16 19.5 19 17.5" stroke="var(--wl-beacon)" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+    KEEL
+  </a>
+  <span class="crumb">NORTH PLANT · <b>OPERATIONS</b></span>
+  <div class="search" role="search" tabindex="0">Search orders, lines, people… <span class="wl-kbd">⌘K</span></div>
+  <button class="theme-btn wl-btn wl-btn--quiet wl-btn--sm" id="themeBtn" type="button" style="font-family:var(--wl-font-data);letter-spacing:.08em" aria-label="Switch theme">SYSTEM</button>
+  <span class="who" title="K. Halbfas">KH</span>
+</header>
+
+<div class="frame">
+  <aside class="rail-wrap">
+    <span class="wl-annot">Sections</span>
+    <nav class="wl-rail" aria-label="Main">
+      <a href="#" aria-current="page">Operations</a>
+      <a href="#">Work orders</a>
+      <a href="#">Lines &amp; assets</a>
+      <a href="#">Incidents</a>
+      <a href="#">Crew &amp; shifts</a>
+      <a href="#">Inventory</a>
+      <a href="#">Reports</a>
+    </nav>
+    <span class="wl-annot" style="margin-top:16px">Saved views</span>
+    <nav class="wl-rail" aria-label="Saved views">
+      <a href="#">Late this week</a>
+      <a href="#">Line 4 recovery</a>
+    </nav>
+    <div class="foot pane-note">SHIFT A · 06:00–14:00<br>LOGGED 06:47 UTC</div>
+  </aside>
+
+  <main class="deck">
+    <div class="deck-head">
+      <h1>Operations</h1>
+      <span class="stamp" id="clockStamp">Sat Aug 30 · 06:47 UTC · Shift A</span>
+      <div class="acts">
+        <button class="wl-btn wl-btn--line" type="button">Handover report</button>
+        <button class="wl-btn wl-btn--beacon" type="button" id="newOrder">New work order</button>
+      </div>
+    </div>
+
+    <!-- above the waterline -->
+    <section class="gauges" aria-label="Plant condition">
+      <div class="wl-gauge"><span class="wl-gauge__label">OEE · Plant</span><span class="wl-gauge__value">91.7<small> %</small></span><span class="wl-gauge__delta wl-gauge__delta--ok">▲ 1.2 vs last shift</span></div>
+      <div class="wl-gauge"><span class="wl-gauge__label">Throughput</span><span class="wl-gauge__value">1,204<small> u/h</small></span><span class="wl-gauge__delta wl-gauge__delta--fog">— steady</span></div>
+      <div class="wl-gauge"><span class="wl-gauge__label">Lines running</span><span class="wl-gauge__value">5<small> / 6</small></span><span class="wl-gauge__delta wl-gauge__delta--crit">■ Line 4 down 0:06</span></div>
+      <div class="wl-gauge"><span class="wl-gauge__label">On-time orders</span><span class="wl-gauge__value">96.4<small> %</small></span><span class="wl-gauge__delta wl-gauge__delta--warn">▼ 0.8 this week</span></div>
+      <div class="wl-gauge"><span class="wl-gauge__label">Open incidents</span><span class="wl-gauge__value">3</span><span class="wl-gauge__delta wl-gauge__delta--crit">▲ 1 critical</span></div>
+    </section>
+
+    <hr class="wl-waterline">
+
+    <!-- the working depth -->
+    <div class="below">
+      <div style="display:flex;flex-direction:column;gap:16px;min-width:0">
+
+        <div class="wl-plate">
+          <div class="wl-plate__head">
+            <span class="wl-plate__title">Throughput — last 12 hours</span>
+            <span class="pane-note">UNITS / HOUR · ALL LINES</span>
+          </div>
+          <div class="chart-box"><canvas id="tpChart"></canvas></div>
+          <div class="legend">
+            <span><i></i>ACTUAL</span>
+            <span class="tgt"><i></i>TARGET 1,150</span>
+          </div>
+        </div>
+
+        <div class="wl-plate">
+          <div class="wl-plate__head">
+            <span class="wl-plate__title">Work orders — exceptions first</span>
+            <div style="display:flex;gap:8px;align-items:center">
+              <button class="wl-btn wl-btn--quiet wl-btn--sm" type="button">Filter</button>
+              <button class="wl-btn wl-btn--quiet wl-btn--sm" type="button">Export</button>
+            </div>
+          </div>
+          <div style="overflow-x:auto">
+            <table class="wl-ledger" id="ledger" style="min-width:680px">
+              <thead>
+                <tr><th>Order</th><th>Line</th><th>Status</th><th class="wl-num">Qty</th><th class="wl-num">Complete</th><th class="wl-num">Due</th></tr>
+              </thead>
+              <tbody>
+                <tr tabindex="0"><td><span class="wl-id">WO-2479</span> &nbsp;Valve body, brass</td><td>Line 4</td><td><span class="wl-pennant wl-pennant--crit">Line down</span></td><td class="wl-num">1,150</td><td class="wl-num">31 %</td><td class="wl-num">Sep 01</td></tr>
+                <tr tabindex="0"><td><span class="wl-id">WO-2482</span> &nbsp;Gasket set, EPDM</td><td>Line 1</td><td><span class="wl-pennant wl-pennant--warn">Due 14:00</span></td><td class="wl-num">2,400</td><td class="wl-num">88 %</td><td class="wl-num">Aug 30</td></tr>
+                <tr tabindex="0"><td><span class="wl-id">WO-2486</span> &nbsp;Seal ring, PTFE</td><td>Line 2</td><td><span class="wl-pennant wl-pennant--warn">Material low</span></td><td class="wl-num">9,200</td><td class="wl-num">44 %</td><td class="wl-num">Sep 03</td></tr>
+                <tr tabindex="0"><td><span class="wl-id">WO-2485</span> &nbsp;Bracket, laser-cut</td><td>—</td><td><span class="wl-pennant wl-pennant--fog">Unscheduled</span></td><td class="wl-num">5,600</td><td class="wl-num">0 %</td><td class="wl-num">Sep 05</td></tr>
+                <tr tabindex="0" aria-selected="true"><td><span class="wl-id">WO-2481</span> &nbsp;Housing, anodized</td><td>Line 3</td><td><span class="wl-pennant wl-pennant--ok">Running</span></td><td class="wl-num">8,000</td><td class="wl-num">62 %</td><td class="wl-num">Sep 02</td></tr>
+                <tr tabindex="0"><td><span class="wl-id">WO-2483</span> &nbsp;Shaft, ground</td><td>Line 5</td><td><span class="wl-pennant wl-pennant--ok">Running</span></td><td class="wl-num">640</td><td class="wl-num">71 %</td><td class="wl-num">Sep 04</td></tr>
+                <tr tabindex="0"><td><span class="wl-id">WO-2480</span> &nbsp;Cover plate, coated</td><td>Line 6</td><td><span class="wl-pennant wl-pennant--ok">Running</span></td><td class="wl-num">3,300</td><td class="wl-num">55 %</td><td class="wl-num">Sep 02</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="hint-bar">
+            <span><span class="wl-kbd">J</span><span class="wl-kbd">K</span> move</span>
+            <span><span class="wl-kbd">↵</span> open</span>
+            <span><span class="wl-kbd">A</span> assign</span>
+            <span style="margin-left:auto" class="wl-data">7 of 128 · trouble first</span>
+          </div>
+        </div>
+      </div>
+
+      <aside style="display:flex;flex-direction:column;gap:16px">
+        <div class="wl-plate">
+          <div class="wl-plate__head"><span class="wl-plate__title">Watch log</span><span class="pane-note">LIVE</span></div>
+          <div class="feed">
+            <div class="feed-item crit"><span class="pip"></span><div><div class="t">06:41</div><div class="m"><b>Line 4 stopped.</b> Spindle overtemp. INC-0093 opened, assigned to M. Okafor.</div></div></div>
+            <div class="feed-item warn"><span class="pip"></span><div><div class="t">06:22</div><div class="m"><b>PTFE stock low.</b> 4.2 h remaining at current rate. Reorder drafted.</div></div></div>
+            <div class="feed-item ok"><span class="pip"></span><div><div class="t">06:04</div><div class="m"><b>Shift A on deck.</b> 14 of 14 checked in. Handover accepted by K. Halbfas.</div></div></div>
+            <div class="feed-item"><span class="pip"></span><div><div class="t">05:58</div><div class="m"><b>Line 2 changeover</b> complete in 22 min — 3 min under standard.</div></div></div>
+            <div class="feed-item ok"><span class="pip"></span><div><div class="t">05:31</div><div class="m"><b>WO-2478 closed.</b> 4,000 / 4,000 units, 0 rejects.</div></div></div>
+          </div>
+        </div>
+
+        <div class="wl-plate">
+          <div class="wl-plate__head"><span class="wl-plate__title">Lines</span><span class="pane-note">6 ASSETS</span></div>
+          <div class="wl-plate__body" style="display:flex;flex-direction:column;gap:12px">
+            <div><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px"><span>Line 1 · Molding</span><span class="wl-data" style="color:var(--wl-ink-2)">96 %</span></div><div class="wl-bar wl-bar--ok"><i style="width:96%"></i></div></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px"><span>Line 2 · Molding</span><span class="wl-data" style="color:var(--wl-ink-2)">89 %</span></div><div class="wl-bar wl-bar--ok"><i style="width:89%"></i></div></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px"><span>Line 3 · Extrusion</span><span class="wl-data" style="color:var(--wl-ink-2)">94 %</span></div><div class="wl-bar wl-bar--ok"><i style="width:94%"></i></div></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px"><span>Line 4 · Machining</span><span class="wl-data" style="color:var(--wl-crit)">STOPPED</span></div><div class="wl-bar wl-bar--crit"><i style="width:8%"></i></div></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px"><span>Line 5 · Grinding</span><span class="wl-data" style="color:var(--wl-ink-2)">82 %</span></div><div class="wl-bar wl-bar--warn"><i style="width:82%"></i></div></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px"><span>Line 6 · Coating</span><span class="wl-data" style="color:var(--wl-ink-2)">91 %</span></div><div class="wl-bar wl-bar--ok"><i style="width:91%"></i></div></div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+</div>
+
+<div class="hails" id="hails" aria-live="polite"></div>
+
+<script>
+/* ---- theme cycle ---- */
+(function () {
+  var btn = document.getElementById('themeBtn');
+  var order = ['system', 'light', 'dark'];
+  var mode = 'system';
+  try { mode = localStorage.getItem('wl-theme') || 'system'; } catch (e) {}
+  function apply(m) {
+    mode = m;
+    if (m === 'system') document.documentElement.removeAttribute('data-theme');
+    else document.documentElement.setAttribute('data-theme', m);
+    btn.textContent = m.toUpperCase();
+    try { localStorage.setItem('wl-theme', m); } catch (e) {}
+  }
+  apply(mode);
+  btn.addEventListener('click', function () { apply(order[(order.indexOf(mode) + 1) % order.length]); });
+})();
+
+/* ---- ledger keyboard: J/K move, Enter announces ---- */
+(function () {
+  var rows = Array.prototype.slice.call(document.querySelectorAll('#ledger tbody tr'));
+  function selected() { return rows.findIndex(function (r) { return r.getAttribute('aria-selected') === 'true'; }); }
+  function select(i) {
+    rows.forEach(function (r) { r.removeAttribute('aria-selected'); });
+    i = Math.max(0, Math.min(rows.length - 1, i));
+    rows[i].setAttribute('aria-selected', 'true');
+    rows[i].focus({ preventScroll: false });
+  }
+  rows.forEach(function (r, i) { r.addEventListener('click', function () { select(i); }); });
+  document.addEventListener('keydown', function (e) {
+    if (/input|textarea|select/i.test(document.activeElement.tagName)) return;
+    if (e.key === 'j' || e.key === 'J') select(selected() + 1);
+    if (e.key === 'k' || e.key === 'K') select(selected() - 1);
+    if (e.key === 'Enter' && selected() >= 0) hail('ok', '<b>Detail pane.</b> In the product, the selected order opens below the waterline — the ledger keeps its place.');
+  });
+})();
+
+/* ---- hails ---- */
+function hail(kind, html) {
+  var wrap = document.getElementById('hails');
+  var el = document.createElement('div');
+  el.className = 'wl-hail wl-hail--' + kind;
+  el.innerHTML = '<div>' + html + '</div>';
+  wrap.appendChild(el);
+  setTimeout(function () { el.remove(); }, 5000);
+}
+document.getElementById('newOrder').addEventListener('click', function () {
+  hail('ok', '<b>Intake opened.</b> New orders get an ID on save — this demo stops here.');
+});
+
+/* ---- throughput chart: ink line, beacon-dashed target, quiet grid ---- */
+(function () {
+  var cv = document.getElementById('tpChart');
+  var ctx = cv.getContext('2d');
+  var data = [1010, 1080, 1140, 1190, 1175, 1120, 1060, 980, 1150, 1210, 1230, 1204];
+  var target = 1150;
+  function css(n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  function draw() {
+    var d = Math.min(window.devicePixelRatio || 1, 2);
+    var w = cv.clientWidth, h = cv.clientHeight;
+    cv.width = w * d; cv.height = h * d;
+    ctx.setTransform(d, 0, 0, d, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+    var padL = 42, padR = 8, padT = 10, padB = 20;
+    var min = 900, max = 1300;
+    function X(i) { return padL + (w - padL - padR) * (i / (data.length - 1)); }
+    function Y(v) { return padT + (h - padT - padB) * (1 - (v - min) / (max - min)); }
+    var line = css('--wl-line'), ink = css('--wl-ink'), ink3 = css('--wl-ink-3'), beacon = css('--wl-beacon');
+    /* grid + axis figures */
+    ctx.font = '500 9px "Spline Sans Mono", monospace';
+    ctx.fillStyle = ink3; ctx.strokeStyle = line; ctx.lineWidth = 1;
+    [1000, 1100, 1200, 1300].forEach(function (v) {
+      ctx.beginPath(); ctx.moveTo(padL, Y(v)); ctx.lineTo(w - padR, Y(v)); ctx.stroke();
+      ctx.textAlign = 'right'; ctx.fillText(String(v), padL - 8, Y(v) + 3);
+    });
+    ctx.textAlign = 'center';
+    ['-12h', '-9h', '-6h', '-3h', 'now'].forEach(function (t, i) {
+      ctx.fillText(t, X(i * (data.length - 1) / 4), h - 5);
+    });
+    /* target */
+    ctx.strokeStyle = beacon; ctx.setLineDash([5, 4]); ctx.lineWidth = 1.4;
+    ctx.beginPath(); ctx.moveTo(padL, Y(target)); ctx.lineTo(w - padR, Y(target)); ctx.stroke();
+    ctx.setLineDash([]);
+    /* area wash + actual line */
+    ctx.beginPath();
+    data.forEach(function (v, i) { i === 0 ? ctx.moveTo(X(i), Y(v)) : ctx.lineTo(X(i), Y(v)); });
+    ctx.strokeStyle = ink; ctx.lineWidth = 2; ctx.lineJoin = 'round'; ctx.stroke();
+    ctx.lineTo(X(data.length - 1), h - padB); ctx.lineTo(padL, h - padB); ctx.closePath();
+    ctx.globalAlpha = 0.06; ctx.fillStyle = ink; ctx.fill(); ctx.globalAlpha = 1;
+    /* emphasized endpoint */
+    ctx.beginPath(); ctx.arc(X(data.length - 1), Y(data[data.length - 1]), 3.5, 0, 7);
+    ctx.fillStyle = ink; ctx.fill();
+    ctx.textAlign = 'right'; ctx.fillStyle = ink;
+    ctx.font = '600 10px "Spline Sans Mono", monospace';
+    ctx.fillText('1,204', w - padR - 2, Y(data[data.length - 1]) - 8);
+  }
+  draw();
+  window.addEventListener('resize', draw);
+  new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  if (window.matchMedia) { window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', draw); }
+})();
+</script>
+</body>
+</html>

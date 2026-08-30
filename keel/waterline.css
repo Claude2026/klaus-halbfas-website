@@ -1,0 +1,572 @@
+/* ============================================================
+   WATERLINE — the KEEL design language
+   v1.0 · tokens + core components
+   ------------------------------------------------------------
+   Doctrine:
+   1. The waterline — one datum per screen. Calm above, depth below.
+   2. Color is state — chrome is colorless. If it's colored,
+      it's an action (Beacon) or a condition (buoyage).
+   3. Contours, not shadows — depth by hairline and tonal step.
+   4. Numbers are the interface — tabular, aligned, comparable.
+   5. One motion — a single easing; motion only shows causality.
+   ============================================================ */
+
+/* ---------- 1 · TOKENS -------------------------------------- */
+
+:root {
+  /* Ground — Daywatch (chart paper) */
+  --wl-ground:        #F3F1E9;  /* the chart itself */
+  --wl-surface:       #FAF9F4;  /* raised plate */
+  --wl-well:          #EAE7DC;  /* sunken field / input wells */
+  --wl-line:          #D9D5C7;  /* hairline contour */
+  --wl-line-strong:   #B9B4A2;  /* emphasized contour */
+
+  /* Ink */
+  --wl-ink:           #1A2421;  /* primary text */
+  --wl-ink-2:         #4A5450;  /* secondary text */
+  --wl-ink-3:         #79817B;  /* annotations, placeholders */
+  --wl-ink-inverse:   #F3F1E9;
+
+  /* Beacon — the only interactive color */
+  --wl-beacon:        #B62E63;
+  --wl-beacon-hover:  #9A2452;
+  --wl-beacon-wash:   rgba(182, 46, 99, 0.09);
+  --wl-beacon-ink:    #FFFFFF;  /* text on beacon */
+
+  /* Shoal — selection & focus wash (shallow-water tint) */
+  --wl-shoal:         #DCE7E0;
+  --wl-shoal-strong:  #C8DAD1;
+
+  /* Buoyage — status. Never decorative. */
+  --wl-ok:            #177049;  /* Starboard — on course */
+  --wl-ok-wash:       rgba(23, 112, 73, 0.11);
+  --wl-warn:          #8F6700;  /* Quarantine — needs attention */
+  --wl-warn-wash:     rgba(178, 132, 10, 0.14);
+  --wl-crit:          #B93A21;  /* Port — off course */
+  --wl-crit-wash:     rgba(185, 58, 33, 0.11);
+  --wl-fog:           #5C6A64;  /* Fog — unknown / paused */
+  --wl-fog-wash:      rgba(92, 106, 100, 0.11);
+
+  /* Type */
+  --wl-font-ui:   "Schibsted Grotesk", "Segoe UI", system-ui, sans-serif;
+  --wl-font-data: "Spline Sans Mono", "SF Mono", ui-monospace, Menlo, monospace;
+
+  --wl-text-xs:  0.75rem;   /* 12 — annotations */
+  --wl-text-sm:  0.8125rem; /* 13 — data, dense UI */
+  --wl-text-md:  0.9375rem; /* 15 — body */
+  --wl-text-lg:  1.1875rem; /* 19 — section */
+  --wl-text-xl:  1.625rem;  /* 26 — page title */
+  --wl-text-2xl: 2.375rem;  /* 38 — display */
+
+  /* Space — the fathom grid (1 fathom = 8px) */
+  --wl-half:   4px;
+  --wl-1:      8px;
+  --wl-2:     16px;
+  --wl-3:     24px;
+  --wl-4:     32px;
+  --wl-6:     48px;
+  --wl-8:     64px;
+
+  /* Form */
+  --wl-radius:     6px;   /* standard */
+  --wl-radius-sm:  4px;   /* inputs, chips */
+  --wl-radius-lg: 10px;   /* floating layers only */
+
+  /* Depth — the only permitted shadow (floating layers) */
+  --wl-cast: 0 8px 24px rgba(20, 30, 27, 0.14), 0 1px 3px rgba(20, 30, 27, 0.10);
+
+  /* Motion — one easing, three durations */
+  --wl-ease: cubic-bezier(0.22, 0.61, 0.21, 1);
+  --wl-t-fast: 120ms;   /* state change */
+  --wl-t-move: 240ms;   /* movement, reveal */
+  --wl-t-slow: 420ms;   /* layer entry */
+
+  color-scheme: light;
+}
+
+/* Nightwatch — bridge-at-night. Not an inversion: bone ink on
+   deep water, Beacon brightened to hold its signal value. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --wl-ground:        #0D1514;
+    --wl-surface:       #141D1B;
+    --wl-well:          #0A100F;
+    --wl-line:          #263230;
+    --wl-line-strong:   #3C4A46;
+
+    --wl-ink:           #E8E5D8;
+    --wl-ink-2:         #A9B0A7;
+    --wl-ink-3:         #6F7973;
+    --wl-ink-inverse:   #10201B;
+
+    --wl-beacon:        #E5719F;
+    --wl-beacon-hover:  #EF8DB2;
+    --wl-beacon-wash:   rgba(229, 113, 159, 0.13);
+    --wl-beacon-ink:    #23070F;
+
+    --wl-shoal:         #1B2E28;
+    --wl-shoal-strong:  #24403A;
+
+    --wl-ok:            #4EC38E;
+    --wl-ok-wash:       rgba(78, 195, 142, 0.13);
+    --wl-warn:          #E0B33F;
+    --wl-warn-wash:     rgba(224, 179, 63, 0.13);
+    --wl-crit:          #EC6E50;
+    --wl-crit-wash:     rgba(236, 110, 80, 0.13);
+    --wl-fog:           #8FA097;
+    --wl-fog-wash:      rgba(143, 160, 151, 0.13);
+
+    --wl-cast: 0 8px 24px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.4);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --wl-ground:        #0D1514;
+  --wl-surface:       #141D1B;
+  --wl-well:          #0A100F;
+  --wl-line:          #263230;
+  --wl-line-strong:   #3C4A46;
+
+  --wl-ink:           #E8E5D8;
+  --wl-ink-2:         #A9B0A7;
+  --wl-ink-3:         #6F7973;
+  --wl-ink-inverse:   #10201B;
+
+  --wl-beacon:        #E5719F;
+  --wl-beacon-hover:  #EF8DB2;
+  --wl-beacon-wash:   rgba(229, 113, 159, 0.13);
+  --wl-beacon-ink:    #23070F;
+
+  --wl-shoal:         #1B2E28;
+  --wl-shoal-strong:  #24403A;
+
+  --wl-ok:            #4EC38E;
+  --wl-ok-wash:       rgba(78, 195, 142, 0.13);
+  --wl-warn:          #E0B33F;
+  --wl-warn-wash:     rgba(224, 179, 63, 0.13);
+  --wl-crit:          #EC6E50;
+  --wl-crit-wash:     rgba(236, 110, 80, 0.13);
+  --wl-fog:           #8FA097;
+  --wl-fog-wash:      rgba(143, 160, 151, 0.13);
+
+  --wl-cast: 0 8px 24px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.4);
+  color-scheme: dark;
+}
+
+/* ---------- 2 · BASE ---------------------------------------- */
+
+.wl, .wl * , .wl *::before, .wl *::after { box-sizing: border-box; }
+
+.wl {
+  font-family: var(--wl-font-ui);
+  font-size: var(--wl-text-md);
+  line-height: 1.55;
+  color: var(--wl-ink);
+  background: var(--wl-ground);
+  -webkit-font-smoothing: antialiased;
+}
+
+.wl :focus-visible {
+  outline: 2px solid var(--wl-beacon);
+  outline-offset: 2px;
+  border-radius: var(--wl-radius-sm);
+}
+
+.wl ::selection { background: var(--wl-shoal-strong); }
+
+/* Data voice — anything numeric or coded */
+.wl-data {
+  font-family: var(--wl-font-data);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/* Annotation — the chart-margin voice */
+.wl-annot {
+  font-family: var(--wl-font-data);
+  font-size: var(--wl-text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--wl-ink-3);
+}
+
+/* ---------- 3 · THE WATERLINE ------------------------------- */
+/* The one datum per screen. Summary sits above; work below.   */
+
+.wl-waterline {
+  position: relative;
+  border: 0;
+  border-top: 2px solid var(--wl-line-strong);
+  margin: var(--wl-4) 0;
+}
+.wl-waterline::after {
+  content: "WATERLINE";
+  position: absolute;
+  top: -0.65em; right: 0;
+  font-family: var(--wl-font-data);
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  color: var(--wl-ink-3);
+  background: var(--wl-ground);
+  padding-left: var(--wl-1);
+}
+
+/* ---------- 4 · BUTTONS (Commands) -------------------------- */
+
+.wl-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--wl-1);
+  font: 600 var(--wl-text-sm)/1 var(--wl-font-ui);
+  letter-spacing: 0.01em;
+  padding: 0 var(--wl-2);
+  height: 34px;
+  border-radius: var(--wl-radius);
+  border: 1px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background var(--wl-t-fast) var(--wl-ease),
+              border-color var(--wl-t-fast) var(--wl-ease),
+              color var(--wl-t-fast) var(--wl-ease);
+}
+.wl-btn:active { transform: translateY(1px); }
+
+/* Primary — at most one per waterline region */
+.wl-btn--beacon {
+  background: var(--wl-beacon);
+  color: var(--wl-beacon-ink);
+}
+.wl-btn--beacon:hover { background: var(--wl-beacon-hover); }
+
+/* Secondary — outline on the paper */
+.wl-btn--line {
+  background: var(--wl-surface);
+  border-color: var(--wl-line-strong);
+  color: var(--wl-ink);
+}
+.wl-btn--line:hover { border-color: var(--wl-ink-2); background: var(--wl-ground); }
+
+/* Quiet — table rows, toolbars */
+.wl-btn--quiet {
+  background: transparent;
+  color: var(--wl-ink-2);
+}
+.wl-btn--quiet:hover { background: var(--wl-shoal); color: var(--wl-ink); }
+
+/* Destructive — Port red, confirm-gated */
+.wl-btn--port {
+  background: transparent;
+  border-color: var(--wl-crit);
+  color: var(--wl-crit);
+}
+.wl-btn--port:hover { background: var(--wl-crit); color: #fff; }
+
+.wl-btn[disabled] { opacity: 0.45; cursor: not-allowed; transform: none; }
+.wl-btn--sm { height: 28px; font-size: var(--wl-text-xs); padding: 0 10px; }
+
+/* ---------- 5 · FIELDS -------------------------------------- */
+
+.wl-field { display: flex; flex-direction: column; gap: 6px; }
+.wl-field > label {
+  font: 600 var(--wl-text-xs)/1 var(--wl-font-ui);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--wl-ink-2);
+}
+.wl-input, .wl-select {
+  font: 400 var(--wl-text-sm)/1.3 var(--wl-font-ui);
+  color: var(--wl-ink);
+  background: var(--wl-well);
+  border: 1px solid var(--wl-line);
+  border-radius: var(--wl-radius-sm);
+  padding: 8px 10px;
+  height: 36px;
+  transition: border-color var(--wl-t-fast) var(--wl-ease),
+              background var(--wl-t-fast) var(--wl-ease);
+}
+.wl-input::placeholder { color: var(--wl-ink-3); }
+.wl-input:hover, .wl-select:hover { border-color: var(--wl-line-strong); }
+.wl-input:focus, .wl-select:focus {
+  outline: none;
+  border-color: var(--wl-beacon);
+  background: var(--wl-surface);
+}
+.wl-field > .wl-hint {
+  font-size: var(--wl-text-xs);
+  color: var(--wl-ink-3);
+}
+.wl-field--invalid .wl-input { border-color: var(--wl-crit); }
+.wl-field--invalid .wl-hint  { color: var(--wl-crit); }
+
+/* Switch */
+.wl-switch {
+  --sw: 34px;
+  -webkit-appearance: none;
+  appearance: none;
+  width: var(--sw); height: 20px;
+  border-radius: 999px;
+  background: var(--wl-line-strong);
+  position: relative;
+  cursor: pointer;
+  transition: background var(--wl-t-fast) var(--wl-ease);
+  border: none;
+  flex: none;
+}
+.wl-switch::after {
+  content: "";
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--wl-surface);
+  transition: transform var(--wl-t-fast) var(--wl-ease);
+}
+.wl-switch:checked { background: var(--wl-beacon); }
+.wl-switch:checked::after { transform: translateX(14px); }
+
+/* ---------- 6 · PENNANTS (status) --------------------------- */
+/* A pennant is hoisted, never painted on: pill + tick + word.  */
+
+.wl-pennant {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font: 500 var(--wl-text-xs)/1 var(--wl-font-data);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 4px 9px 4px 7px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.wl-pennant::before {
+  content: "";
+  width: 7px; height: 7px;
+  border-radius: 2px;          /* square tick — reads without color */
+  background: currentColor;
+  transform: rotate(45deg);
+}
+.wl-pennant--ok   { color: var(--wl-ok);   background: var(--wl-ok-wash); }
+.wl-pennant--ok::before { border-radius: 50%; transform: none; } /* circle = clear */
+.wl-pennant--warn { color: var(--wl-warn); background: var(--wl-warn-wash); }
+.wl-pennant--crit { color: var(--wl-crit); background: var(--wl-crit-wash); }
+.wl-pennant--crit::before { border-radius: 1px; transform: none; } /* square = stop */
+.wl-pennant--fog  { color: var(--wl-fog);  background: var(--wl-fog-wash); }
+.wl-pennant--fog::before { opacity: 0.55; }
+
+/* ---------- 7 · PLATES (cards) ------------------------------ */
+
+.wl-plate {
+  background: var(--wl-surface);
+  border: 1px solid var(--wl-line);
+  border-radius: var(--wl-radius);
+}
+.wl-plate__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--wl-2);
+  padding: var(--wl-2);
+  border-bottom: 1px solid var(--wl-line);
+}
+.wl-plate__title { font: 600 var(--wl-text-sm)/1.3 var(--wl-font-ui); }
+.wl-plate__body { padding: var(--wl-2); }
+
+/* ---------- 8 · GAUGES (KPI tiles, above the waterline) ----- */
+
+.wl-gauge {
+  background: var(--wl-surface);
+  border: 1px solid var(--wl-line);
+  border-radius: var(--wl-radius);
+  padding: 14px var(--wl-2) var(--wl-2);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+.wl-gauge__label {
+  font-family: var(--wl-font-data);
+  font-size: var(--wl-text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--wl-ink-3);
+}
+.wl-gauge__value {
+  font: 500 var(--wl-text-xl)/1.05 var(--wl-font-data);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  color: var(--wl-ink);
+}
+.wl-gauge__value small { font-size: 0.55em; color: var(--wl-ink-3); letter-spacing: 0; }
+.wl-gauge__delta {
+  font: 500 var(--wl-text-xs)/1 var(--wl-font-data);
+  font-variant-numeric: tabular-nums;
+}
+.wl-gauge__delta--ok   { color: var(--wl-ok); }
+.wl-gauge__delta--warn { color: var(--wl-warn); }
+.wl-gauge__delta--crit { color: var(--wl-crit); }
+.wl-gauge__delta--fog  { color: var(--wl-ink-3); }
+
+/* ---------- 9 · LEDGER (data table) ------------------------- */
+
+.wl-ledger { width: 100%; border-collapse: collapse; font-size: var(--wl-text-sm); }
+.wl-ledger th {
+  font: 600 var(--wl-text-xs)/1 var(--wl-font-data);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--wl-ink-3);
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--wl-line-strong);
+  white-space: nowrap;
+}
+.wl-ledger td {
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--wl-line);
+  vertical-align: middle;
+}
+.wl-ledger td.wl-num, .wl-ledger th.wl-num {
+  text-align: right;
+  font-family: var(--wl-font-data);
+  font-variant-numeric: tabular-nums;
+}
+.wl-ledger tbody tr {
+  transition: background var(--wl-t-fast) var(--wl-ease);
+}
+.wl-ledger tbody tr:hover { background: var(--wl-shoal); cursor: pointer; }
+.wl-ledger tbody tr[aria-selected="true"] { background: var(--wl-shoal-strong); }
+.wl-ledger .wl-id { font-family: var(--wl-font-data); color: var(--wl-ink-2); font-size: var(--wl-text-xs); }
+
+/* ---------- 10 · HELM & RAIL (navigation) ------------------- */
+
+.wl-helm {
+  display: flex;
+  align-items: center;
+  gap: var(--wl-2);
+  height: 52px;
+  padding: 0 var(--wl-2);
+  background: var(--wl-surface);
+  border-bottom: 1px solid var(--wl-line);
+}
+.wl-rail { display: flex; flex-direction: column; gap: 2px; padding: var(--wl-1); }
+.wl-rail a, .wl-rail button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font: 500 var(--wl-text-sm)/1 var(--wl-font-ui);
+  color: var(--wl-ink-2);
+  text-decoration: none;
+  padding: 8px 10px;
+  border-radius: var(--wl-radius-sm);
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background var(--wl-t-fast) var(--wl-ease), color var(--wl-t-fast) var(--wl-ease);
+}
+.wl-rail a:hover, .wl-rail button:hover { background: var(--wl-shoal); color: var(--wl-ink); }
+.wl-rail [aria-current] {
+  background: var(--wl-shoal);
+  color: var(--wl-ink);
+  box-shadow: inset 2px 0 0 var(--wl-beacon);
+}
+
+/* Tabs — a contour the active tab breaks through */
+.wl-tabs {
+  display: flex;
+  gap: var(--wl-3);
+  border-bottom: 1px solid var(--wl-line);
+}
+.wl-tabs button {
+  font: 500 var(--wl-text-sm)/1 var(--wl-font-ui);
+  color: var(--wl-ink-2);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 10px 2px 9px;
+  margin-bottom: -1px;
+  cursor: pointer;
+  transition: color var(--wl-t-fast) var(--wl-ease);
+}
+.wl-tabs button:hover { color: var(--wl-ink); }
+.wl-tabs [aria-selected="true"] {
+  color: var(--wl-ink);
+  border-bottom-color: var(--wl-beacon);
+}
+
+/* ---------- 11 · HAILS (toasts) & FLOATING LAYERS ----------- */
+
+.wl-hail {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--wl-surface);
+  border: 1px solid var(--wl-line-strong);
+  border-radius: var(--wl-radius-lg);
+  box-shadow: var(--wl-cast);
+  padding: 12px 14px;
+  max-width: 380px;
+  font-size: var(--wl-text-sm);
+}
+.wl-hail::before {
+  content: "";
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  margin-top: 5px;
+  flex: none;
+  background: var(--wl-fog);
+}
+.wl-hail--ok::before   { background: var(--wl-ok); }
+.wl-hail--warn::before { background: var(--wl-warn); border-radius: 2px; transform: rotate(45deg); }
+.wl-hail--crit::before { background: var(--wl-crit); border-radius: 1px; }
+.wl-hail b { font-weight: 600; }
+
+.wl-layer {
+  background: var(--wl-surface);
+  border: 1px solid var(--wl-line-strong);
+  border-radius: var(--wl-radius-lg);
+  box-shadow: var(--wl-cast);
+}
+
+/* ---------- 12 · SMALL PARTS -------------------------------- */
+
+.wl-kbd {
+  font: 500 0.6875rem/1 var(--wl-font-data);
+  color: var(--wl-ink-2);
+  background: var(--wl-well);
+  border: 1px solid var(--wl-line-strong);
+  border-bottom-width: 2px;
+  border-radius: var(--wl-radius-sm);
+  padding: 3px 6px;
+}
+
+.wl-bar {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--wl-well);
+  border: 1px solid var(--wl-line);
+  overflow: hidden;
+}
+.wl-bar > i {
+  display: block;
+  height: 100%;
+  background: var(--wl-ink-2);
+  border-radius: 999px;
+  transition: width var(--wl-t-move) var(--wl-ease);
+}
+.wl-bar--ok > i   { background: var(--wl-ok); }
+.wl-bar--warn > i { background: var(--wl-warn); }
+.wl-bar--crit > i { background: var(--wl-crit); }
+
+.wl-divider { border: 0; border-top: 1px solid var(--wl-line); margin: var(--wl-3) 0; }
+
+/* ---------- 13 · MOTION DISCIPLINE -------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .wl *, .wl *::before, .wl *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
