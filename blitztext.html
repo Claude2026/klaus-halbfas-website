@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blitztext — Sprache zu Text</title>
+<meta name="description" content="Blitztext: Sprechen statt tippen. Diktat in Deutsch oder Englisch, auf Wunsch geglättet und übersetzt.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#04070e">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2304070e'/%3E%3Cpath d='M36 8 L18 36 H31 L27 56 L46 26 H33 Z' fill='%237fd4ff'/%3E%3C/svg%3E">
+
+<style>
+  @font-face { font-family: 'Cinzel'; font-style: normal; font-weight: 400 600; font-display: swap; src: url('/assets/fonts/cinzel-400-600.woff2') format('woff2'); }
+  @font-face { font-family: 'Newsreader'; font-style: normal; font-weight: 400 500; font-display: swap; src: url('/assets/fonts/newsreader-400-500.woff2') format('woff2'); }
+  @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/assets/fonts/ibmplexmono-400.woff2') format('woff2'); }
+  @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url('/assets/fonts/ibmplexmono-500.woff2') format('woff2'); }
+
+  :root {
+    --bg: #04070e; --bg-raise: #080d1a; --line: #14203a; --line-soft: #0e1830;
+    --ice: #7fd4ff; --ice-dim: #4d7ea8; --signal: #ff2b3d;
+    --silver: #e8edf5; --text: #b9c4d6; --muted: #7f8da4;
+    --serif: 'Newsreader', Georgia, serif;
+    --display: 'Cinzel', 'Times New Roman', serif;
+    --mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  :focus-visible { outline: 2px solid var(--ice); outline-offset: 3px; border-radius: 2px; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: var(--serif); font-size: 18px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased; min-height: 100svh;
+    background-image: radial-gradient(50% 40% at 50% 0%, rgba(30,70,120,0.28) 0%, transparent 70%);
+    background-repeat: no-repeat;
+  }
+  a { color: inherit; }
+  .shell { max-width: 860px; margin: 0 auto; padding: 0 16px; }
+
+  header.top { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; border-bottom: 1px solid var(--line); }
+  .brand { font-family: var(--display); font-size: 13px; font-weight: 600; letter-spacing: 0.22em; color: var(--silver); text-decoration: none; }
+  .brand em { font-style: normal; color: var(--signal); }
+  .tag { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+
+  h1 { font-family: var(--display); font-weight: 600; letter-spacing: 0.12em; color: var(--silver); font-size: clamp(28px, 6vw, 44px); margin: 40px 0 4px; text-align: center; }
+  h1 span { color: var(--ice); }
+  .lede { text-align: center; color: var(--muted); margin: 0 0 28px; font-style: italic; }
+
+  /* Steuerleiste */
+  .controls { display: flex; flex-wrap: wrap; gap: 14px 22px; justify-content: center; align-items: center; margin-bottom: 26px; }
+  .group { display: flex; align-items: center; gap: 8px; }
+  .label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+  .seg button {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; background: transparent; color: var(--text);
+    border: 0; padding: 7px 12px; cursor: pointer; transition: background .2s, color .2s;
+  }
+  .seg button + button { border-left: 1px solid var(--line); }
+  .seg button[aria-pressed="true"] { background: rgba(127,212,255,0.12); color: var(--ice); }
+  .switch { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-family: var(--mono); font-size: 12px; color: var(--text); }
+  .switch input { accent-color: var(--ice); width: 16px; height: 16px; }
+
+  /* Mikrofon */
+  .mic-wrap { display: flex; flex-direction: column; align-items: center; gap: 12px; margin: 8px 0 30px; }
+  .mic {
+    width: 112px; height: 112px; border-radius: 50%; border: 1px solid rgba(127,212,255,0.4);
+    background: radial-gradient(circle at 50% 40%, #0d1a30, #060b16); color: var(--ice);
+    display: grid; place-items: center; cursor: pointer; position: relative;
+    transition: transform .15s ease, border-color .2s, box-shadow .2s;
+    box-shadow: 0 0 30px rgba(127,212,255,0.12);
+  }
+  .mic:hover { transform: scale(1.03); border-color: var(--ice); }
+  .mic svg { width: 40px; height: 40px; }
+  .mic.rec { color: #fff; border-color: var(--signal); background: radial-gradient(circle at 50% 40%, #3a0d14, #14060a); box-shadow: 0 0 40px rgba(255,43,61,0.45); }
+  .mic.rec::after {
+    content: ""; position: absolute; inset: -8px; border-radius: 50%; border: 2px solid var(--signal);
+    animation: pulse 1.4s ease-out infinite;
+  }
+  @keyframes pulse { from { opacity: .8; transform: scale(.95); } to { opacity: 0; transform: scale(1.25); } }
+  @media (prefers-reduced-motion: reduce) { .mic.rec::after { animation: none; opacity: .6; } }
+  .status { font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; color: var(--muted); min-height: 1.4em; text-align: center; }
+  .status.err { color: #ff7a87; }
+  kbd { font-family: var(--mono); font-size: 11px; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 3px; padding: 1px 6px; color: var(--text); }
+
+  /* Ausgabe */
+  .panes { display: grid; grid-template-columns: 1fr; gap: 18px; }
+  @media (min-width: 760px) { .panes.two { grid-template-columns: 1fr 1fr; } }
+  .pane { background: var(--bg-raise); border: 1px solid var(--line); border-radius: 6px; display: flex; flex-direction: column; min-width: 0; }
+  .pane-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--line-soft); }
+  .pane-title { font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ice-dim); }
+  .actions { display: flex; gap: 6px; }
+  .icon-btn {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; color: var(--text);
+    background: transparent; border: 1px solid var(--line); border-radius: 3px; padding: 5px 9px; cursor: pointer;
+    transition: border-color .2s, color .2s;
+  }
+  .icon-btn:hover { border-color: var(--ice-dim); color: var(--ice); }
+  .icon-btn:disabled { opacity: .4; cursor: default; }
+  textarea {
+    width: 100%; min-height: 200px; resize: vertical; background: transparent; border: 0; color: var(--silver);
+    font-family: var(--serif); font-size: 18px; line-height: 1.6; padding: 14px; outline: none;
+  }
+  textarea::placeholder { color: #4a5872; font-style: italic; }
+  .interim { color: var(--muted); font-style: italic; padding: 0 14px 12px; min-height: 1.6em; font-size: 16px; }
+
+  .row-actions { display: flex; justify-content: center; gap: 10px; margin: 18px 0 0; flex-wrap: wrap; }
+  .btn {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 9px 16px; border-radius: 3px; cursor: pointer; border: 1px solid rgba(127,212,255,0.35);
+    background: transparent; color: var(--ice); transition: background .2s, border-color .2s;
+  }
+  .btn:hover { border-color: var(--ice); background: rgba(127,212,255,0.06); }
+  .btn.primary { background: var(--signal); border-color: var(--signal); color: #fff; }
+  .btn.primary:hover { background: #ff4457; }
+  .btn:disabled { opacity: .5; cursor: default; }
+
+  /* Verlauf */
+  section.history { margin: 44px 0 20px; }
+  section.history h2 { font-family: var(--mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 400; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line); padding-bottom: 8px; }
+  .hist-list { list-style: none; margin: 0; padding: 0; }
+  .hist-list li { border-bottom: 1px solid var(--line-soft); padding: 12px 0; display: flex; gap: 12px; align-items: flex-start; }
+  .hist-list .meta { font-family: var(--mono); font-size: 11px; color: var(--muted); white-space: nowrap; padding-top: 4px; }
+  .hist-list .txt { flex: 1; min-width: 0; font-size: 16px; color: var(--text); overflow-wrap: anywhere; }
+  .hist-list .txt small { display: block; color: var(--ice-dim); font-style: italic; margin-top: 4px; }
+  .empty { color: #4a5872; font-style: italic; font-size: 15px; padding: 12px 0; }
+
+  .note { font-size: 14px; color: var(--muted); border-left: 2px solid var(--line); padding-left: 12px; margin: 30px 0; }
+  footer { font-family: var(--mono); font-size: 11px; color: var(--muted); padding: 24px 0 40px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; border-top: 1px solid var(--line); }
+  footer nav { display: flex; gap: 16px; }
+  footer a { text-decoration: none; } footer a:hover { color: var(--ice); }
+
+  .toast {
+    position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(20px); opacity: 0;
+    background: var(--ice); color: #04070e; font-family: var(--mono); font-size: 12px; padding: 9px 16px; border-radius: 3px;
+    transition: opacity .2s, transform .2s; pointer-events: none; z-index: 50;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="top">
+    <a class="brand" href="/">KLAUS HALBFAS<em>.</em></a>
+    <span class="tag">Werkzeug</span>
+  </header>
+
+  <h1>Blitz<span>text</span></h1>
+  <p class="lede">Sprechen statt tippen — diktieren, glätten, übersetzen.</p>
+
+  <div class="controls">
+    <div class="group">
+      <span class="label" id="lbl-src">Ich spreche</span>
+      <div class="seg" role="group" aria-labelledby="lbl-src" data-setting="src">
+        <button type="button" data-val="de-DE">Deutsch</button>
+        <button type="button" data-val="en-US">English</button>
+      </div>
+    </div>
+    <div class="group">
+      <span class="label" id="lbl-tgt">Übersetzen</span>
+      <div class="seg" role="group" aria-labelledby="lbl-tgt" data-setting="tgt">
+        <button type="button" data-val="none">Aus</button>
+        <button type="button" data-val="de">→ DE</button>
+        <button type="button" data-val="en">→ EN</button>
+      </div>
+    </div>
+    <label class="switch"><input type="checkbox" id="opt-clean"> Text glätten</label>
+    <label class="switch"><input type="checkbox" id="opt-copy"> Auto-Kopieren</label>
+  </div>
+
+  <div class="mic-wrap">
+    <button type="button" class="mic" id="mic" aria-label="Aufnahme starten">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/>
+      </svg>
+    </button>
+    <div class="status" id="status" aria-live="polite">Tippen oder <kbd>Leertaste</kbd> zum Starten</div>
+  </div>
+
+  <div class="panes" id="panes">
+    <div class="pane">
+      <div class="pane-head">
+        <span class="pane-title" id="t-orig">Original</span>
+        <div class="actions">
+          <button type="button" class="icon-btn" data-copy="orig">Kopieren</button>
+          <button type="button" class="icon-btn" id="clear">Leeren</button>
+        </div>
+      </div>
+      <textarea id="orig" aria-labelledby="t-orig" placeholder="Hier erscheint dein Diktat. Du kannst auch tippen oder einfügen."></textarea>
+      <div class="interim" id="interim" aria-hidden="true"></div>
+    </div>
+    <div class="pane" id="pane-out" hidden>
+      <div class="pane-head">
+        <span class="pane-title" id="t-out">Ergebnis</span>
+        <div class="actions">
+          <button type="button" class="icon-btn" id="speak">Vorlesen</button>
+          <button type="button" class="icon-btn" data-copy="out">Kopieren</button>
+        </div>
+      </div>
+      <textarea id="out" aria-labelledby="t-out" placeholder="Übersetzung / geglätteter Text"></textarea>
+    </div>
+  </div>
+
+  <div class="row-actions">
+    <button type="button" class="btn primary" id="run">Glätten / Übersetzen</button>
+  </div>
+
+  <section class="history">
+    <h2>Verlauf <button type="button" class="icon-btn" id="hist-clear">Löschen</button></h2>
+    <ul class="hist-list" id="hist"></ul>
+  </section>
+
+  <p class="note">
+    Die Spracherkennung läuft über die Sprach-API deines Browsers (in Chrome und Edge werden die Audiodaten dafür an den Server des Browserherstellers übertragen; Safari erkennt teils lokal).
+    Für „Glätten" und „Übersetzen" wird nur der Text an die Claude-API von Anthropic gesendet. Der Verlauf bleibt ausschließlich in diesem Browser gespeichert.
+    Firefox unterstützt die Spracheingabe nicht — Text eintippen und übersetzen geht dort trotzdem.
+  </p>
+
+  <footer>
+    <div>Blitztext · klaus-halbfas.com</div>
+    <nav><a href="/">Startseite</a><a href="/impressum.html">Impressum</a><a href="/datenschutz.html">Datenschutz</a></nav>
+  </footer>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var orig = $('orig'), out = $('out'), interimEl = $('interim'), statusEl = $('status');
+  var mic = $('mic'), paneOut = $('pane-out'), panes = $('panes'), runBtn = $('run');
+
+  // ---------- Einstellungen (pro Browser gemerkt) ----------
+  function load(key, def) { try { var v = localStorage.getItem('bt.' + key); return v === null ? def : JSON.parse(v); } catch (e) { return def; } }
+  function save(key, val) { try { localStorage.setItem('bt.' + key, JSON.stringify(val)); } catch (e) {} }
+
+  var settings = {
+    src: load('src', (navigator.language || 'de').toLowerCase().indexOf('en') === 0 ? 'en-US' : 'de-DE'),
+    tgt: load('tgt', 'none'),
+    clean: load('clean', false),
+    copy: load('copy', false)
+  };
+
+  function renderSettings() {
+    document.querySelectorAll('.seg').forEach(function (seg) {
+      var key = seg.getAttribute('data-setting');
+      seg.querySelectorAll('button').forEach(function (b) {
+        b.setAttribute('aria-pressed', String(b.getAttribute('data-val') === settings[key]));
+      });
+    });
+    $('opt-clean').checked = settings.clean;
+    $('opt-copy').checked = settings.copy;
+    var needsAI = settings.tgt !== 'none' || settings.clean;
+    paneOut.hidden = !needsAI;
+    panes.classList.toggle('two', needsAI);
+    runBtn.hidden = !needsAI;
+    runBtn.textContent = settings.tgt !== 'none'
+      ? (settings.clean ? 'Glätten & übersetzen' : 'Übersetzen')
+      : 'Text glätten';
+    $('t-out').textContent = settings.tgt === 'de' ? 'Deutsch' : settings.tgt === 'en' ? 'English' : 'Geglättet';
+    if (recog) recog.lang = settings.src;
+  }
+
+  document.querySelectorAll('.seg').forEach(function (seg) {
+    seg.addEventListener('click', function (e) {
+      var b = e.target.closest('button'); if (!b) return;
+      var key = seg.getAttribute('data-setting');
+      settings[key] = b.getAttribute('data-val'); save(key, settings[key]);
+      b.blur(); // damit die Leertaste danach wieder die Aufnahme steuert
+      if (key === 'src' && recording) { restartPending = true; recog.stop(); }
+      renderSettings();
+    });
+  });
+  $('opt-clean').addEventListener('change', function () { settings.clean = this.checked; save('clean', this.checked); renderSettings(); });
+  $('opt-copy').addEventListener('change', function () { settings.copy = this.checked; save('copy', this.checked); });
+
+  // ---------- Hilfsfunktionen ----------
+  var toastTimer;
+  function toast(msg) {
+    var t = $('toast'); t.textContent = msg; t.classList.add('show');
+    clearTimeout(toastTimer); toastTimer = setTimeout(function () { t.classList.remove('show'); }, 1600);
+  }
+  function setStatus(msg, isErr) { statusEl.innerHTML = msg; statusEl.classList.toggle('err', !!isErr); }
+  function copy(text) {
+    if (!text) return;
+    var done = function () { toast('In die Zwischenablage kopiert'); };
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text); done(); });
+    } else { fallbackCopy(text); done(); }
+  }
+  function fallbackCopy(text) {
+    var ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch (e) {} ta.remove();
+  }
+  function escapeHtml(s) { return s.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  // ---------- Spracherkennung ----------
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  var recog = null, recording = false, restartPending = false, errored = false, sessionStartText = '';
+
+  if (!SR) {
+    mic.disabled = true; mic.style.opacity = '.4';
+    setStatus('Spracheingabe wird von diesem Browser nicht unterstützt — bitte Chrome, Edge oder Safari nutzen.', true);
+  } else {
+    recog = new SR();
+    recog.continuous = true;
+    recog.interimResults = true;
+    recog.lang = settings.src;
+
+    recog.onresult = function (e) {
+      var interim = '';
+      for (var i = e.resultIndex; i < e.results.length; i++) {
+        var r = e.results[i];
+        if (r.isFinal) appendText(r[0].transcript);
+        else interim += r[0].transcript;
+      }
+      interimEl.textContent = interim;
+    };
+    recog.onerror = function (e) {
+      if (e.error === 'no-speech' || e.error === 'aborted') return;
+      var msg = {
+        'not-allowed': 'Mikrofon-Zugriff verweigert. Bitte in den Browser-Einstellungen erlauben.',
+        'service-not-allowed': 'Spracherkennung ist in diesem Browser deaktiviert.',
+        'audio-capture': 'Kein Mikrofon gefunden.',
+        'network': 'Netzwerkfehler bei der Spracherkennung.'
+      }[e.error] || ('Fehler: ' + e.error);
+      errored = true; recording = false; updateMic(); setStatus(msg, true);
+    };
+    // Chrome beendet die Erkennung nach Sprechpausen — solange aufgenommen wird, neu starten.
+    recog.onend = function () {
+      interimEl.textContent = '';
+      if (recording || restartPending) {
+        restartPending = false; recording = true;
+        try { recog.start(); } catch (e) {}
+        return;
+      }
+      if (errored) { errored = false; return; }
+      finishSession();
+    };
+  }
+
+  function appendText(t) {
+    t = t.trim(); if (!t) return;
+    var cur = orig.value;
+    var sep = cur && !/\s$/.test(cur) ? ' ' : '';
+    orig.value = cur + sep + t;
+    orig.scrollTop = orig.scrollHeight;
+  }
+
+  function updateMic() {
+    mic.classList.toggle('rec', recording);
+    mic.setAttribute('aria-label', recording ? 'Aufnahme stoppen' : 'Aufnahme starten');
+    if (recording) setStatus('Ich höre zu … <kbd>Leertaste</kbd> zum Stoppen');
+  }
+
+  function start() {
+    if (!recog || recording) return;
+    sessionStartText = orig.value;
+    recording = true; updateMic();
+    try { recog.start(); } catch (e) {}
+  }
+  function stop() {
+    if (!recog || !recording) return;
+    recording = false; updateMic();
+    setStatus('Verarbeite …');
+    recog.stop();
+  }
+  mic.addEventListener('click', function () { recording ? stop() : start(); });
+
+  function finishSession() {
+    var newText = orig.value.slice(sessionStartText.length).trim();
+    if (!newText) { setStatus('Nichts erkannt. Nochmal versuchen?'); return; }
+    if (settings.tgt !== 'none' || settings.clean) {
+      process(orig.value.trim());
+    } else {
+      setStatus('Fertig.');
+      addHistory(orig.value.trim(), '');
+      if (settings.copy) copy(orig.value.trim());
+    }
+  }
+
+  // Leertaste startet/stoppt, außer beim Tippen in einem Textfeld.
+  document.addEventListener('keydown', function (e) {
+    if (e.code !== 'Space' || e.repeat) return;
+    var tag = (e.target.tagName || '').toLowerCase();
+    if (tag === 'textarea' || tag === 'input' || tag === 'button') return;
+    e.preventDefault();
+    recording ? stop() : start();
+  });
+
+  // ---------- Glätten / Übersetzen ----------
+  var busy = false;
+  function process(text) {
+    if (busy || !text) return;
+    busy = true; runBtn.disabled = true;
+    setStatus(settings.tgt !== 'none' ? 'Übersetze …' : 'Glätte …');
+    fetch('/api/process', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: text, target: settings.tgt === 'none' ? null : settings.tgt, clean: settings.clean })
+    })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok) throw new Error(j.error || ('HTTP ' + r.status)); return j; }); })
+      .then(function (j) {
+        out.value = j.text || '';
+        setStatus('Fertig.');
+        addHistory(text, out.value);
+        if (settings.copy) copy(out.value);
+      })
+      .catch(function (err) { setStatus(escapeHtml(err.message || 'Fehler bei der Verarbeitung.'), true); })
+      .then(function () { busy = false; runBtn.disabled = false; });
+  }
+  runBtn.addEventListener('click', function () {
+    var t = orig.value.trim();
+    if (!t) { setStatus('Erst etwas diktieren oder eintippen.', true); return; }
+    process(t);
+  });
+
+  // ---------- Buttons ----------
+  document.querySelectorAll('[data-copy]').forEach(function (b) {
+    b.addEventListener('click', function () { copy($(b.getAttribute('data-copy')).value.trim()); });
+  });
+  $('clear').addEventListener('click', function () { orig.value = ''; out.value = ''; interimEl.textContent = ''; setStatus('Geleert.'); orig.focus(); });
+  var speakBtn = $('speak');
+  if (!('speechSynthesis' in window)) speakBtn.hidden = true;
+  speakBtn.addEventListener('click', function () {
+    var t = out.value.trim(); if (!t) return;
+    speechSynthesis.cancel();
+    var u = new SpeechSynthesisUtterance(t);
+    u.lang = settings.tgt === 'en' ? 'en-US' : settings.tgt === 'de' ? 'de-DE' : settings.src;
+    speechSynthesis.speak(u);
+  });
+
+  // ---------- Verlauf (nur lokal) ----------
+  var history = load('history', []);
+  function addHistory(a, b) {
+    history.unshift({ a: a, b: b, t: Date.now() });
+    history = history.slice(0, 30); save('history', history); renderHistory();
+  }
+  function renderHistory() {
+    var ul = $('hist');
+    if (!history.length) { ul.innerHTML = '<li class="empty">Noch keine Einträge.</li>'; return; }
+    ul.innerHTML = history.map(function (h, i) {
+      var d = new Date(h.t);
+      var when = d.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' }) + ' ' + d.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+      return '<li><span class="meta">' + when + '</span><div class="txt">' + escapeHtml(h.a) +
+        (h.b ? '<small>' + escapeHtml(h.b) + '</small>' : '') +
+        '</div><button type="button" class="icon-btn" data-h="' + i + '">Kopieren</button></li>';
+    }).join('');
+  }
+  $('hist').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-h]'); if (!b) return;
+    var h = history[+b.getAttribute('data-h')]; copy(h.b || h.a);
+  });
+  $('hist-clear').addEventListener('click', function () { history = []; save('history', history); renderHistory(); });
+
+  renderSettings();
+  renderHistory();
+})();
+</script>
+</body>
+</html>
