@@ -15,6 +15,10 @@ Agenten-Team für Lotto „6 aus 45" und EuroMillionen. Start in Claude Code: `/
 
 Die Agenten liegen in `.claude/agents/`, der Ablauf in `.claude/commands/lotto-team.md`.
 
+## Simulator
+
+`lotto/app.html` im Browser öffnen: sucht für 1 bis 10 Tipps die Zahlen mit der höchsten Chance auf mindestens einen Gewinn und prüft sie an simulierten Ziehungen. Die Chance je einzelnem Tipp und auf den Hauptgewinn bleibt unverändert.
+
 ## Rechenwerkzeug
 
 ```
